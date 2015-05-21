@@ -2,7 +2,7 @@ package me.xeroun.mcmmoextras.expbar;
 
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
-import me.xeroun.mcmmoextras.McMExtras;
+import me.xeroun.mcmmoextras.McMMOExtras;
 import me.xeroun.mcmmoextras.PlayerData;
 
 import org.bukkit.Bukkit;
@@ -15,12 +15,12 @@ public class ExpBarEvents implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onExpGain(final McMMOPlayerXpGainEvent xpGainEvent) {
         //set the new value not the old one
-        Bukkit.getScheduler().runTaskLater(McMExtras.getInstance(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater(McMMOExtras.getInstance(), new Runnable() {
 
             @Override
             public void run() {
                 String playerName = xpGainEvent.getPlayer().getName();
-                PlayerData playerData = McMExtras.getInstance().getData(playerName);
+                PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
 
                 playerData.setLastUsedSkill(xpGainEvent.getSkill().name());
                 playerData.updateExpBar();
@@ -30,6 +30,6 @@ public class ExpBarEvents implements Listener {
 
     @EventHandler
     public void onLogout(PlayerQuitEvent quitEvent) {
-        McMExtras.getInstance().clearData(quitEvent.getPlayer().getName());
+        McMMOExtras.getInstance().clearData(quitEvent.getPlayer().getName());
     }
 }

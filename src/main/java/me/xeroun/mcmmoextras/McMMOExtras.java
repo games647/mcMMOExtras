@@ -10,11 +10,11 @@ import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class McMExtras extends JavaPlugin {
+public class McMMOExtras extends JavaPlugin {
 
-    private static McMExtras instance;
+    private static McMMOExtras instance;
 
-    public static McMExtras getInstance() {
+    public static McMMOExtras getInstance() {
         return instance;
     }
 

@@ -1,7 +1,7 @@
 package me.xeroun.mcmmoextras.expbar;
 
 import me.confuser.barapi.BarAPI;
-import me.xeroun.mcmmoextras.McMExtras;
+import me.xeroun.mcmmoextras.McMMOExtras;
 import me.xeroun.mcmmoextras.PlayerData;
 
 import org.bukkit.ChatColor;
@@ -16,11 +16,11 @@ public class ExpBarCommands implements CommandExecutor {
             + "%name%"
             + ChatColor.YELLOW + "] " + ChatColor.RESET;
 
-    private final McMExtras plugin;
+    private final McMMOExtras plugin;
 
     private final String compiledPrefix;
 
-    public ExpBarCommands(McMExtras plugin) {
+    public ExpBarCommands(McMMOExtras plugin) {
         this.plugin = plugin;
 
         compiledPrefix = PREFIX.replace("%name%", plugin.getName());

@@ -17,10 +17,9 @@ softdepend: [mcMMO, barAPI]
 
 # Root commands to register automatically to Bukkit
 commands:
-    ${project.artifactId}:
-        description: 'Shows information about the plugin'
     expbar:
         description: 'Toggles the expbar'
+        aliases: [${project.artifactId}, mcme]
 
 # Permission managment
 permissions:

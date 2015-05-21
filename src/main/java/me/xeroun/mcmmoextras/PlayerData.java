@@ -43,7 +43,7 @@ public class PlayerData {
                     BarAPI.removeBar(player);
                 }
             }
-        }.runTaskTimer(McMExtras.getInstance(), 0, 20L);
+        }.runTaskTimer(McMMOExtras.getInstance(), 0, 20L);
     }
 
     public boolean isEnabled() {
@@ -69,9 +69,9 @@ public class PlayerData {
         }
 
         ChatColor color = ChatColor.GOLD;
-        if (McMExtras.getInstance().getConfig().isString("Experience Bar.Color." + lastUsedSkill)) {
+        if (McMMOExtras.getInstance().getConfig().isString("Experience Bar.Color." + lastUsedSkill)) {
             //specific color for a skill type
-            String configColor = McMExtras.getInstance().getConfig().getString("Experience Bar.Color." + lastUsedSkill);
+            String configColor = McMMOExtras.getInstance().getConfig().getString("Experience Bar.Color." + lastUsedSkill);
             //filter the color char; otherwise we won't detect the color
             color = ChatColor.getByChar(configColor.replace("&", ""));
         }
@@ -82,7 +82,7 @@ public class PlayerData {
 
         String level = Integer.toString(ExperienceAPI.getLevel(player, lastUsedSkill));
         //custom variable replacement
-        String format = McMExtras.getInstance().getConfig().getString("Experience Bar.Format")
+        String format = McMMOExtras.getInstance().getConfig().getString("Experience Bar.Format")
                 .replace("@skill", lastUsedSkill)
                 .replace("@level", level)
                 .replace("@exp", Integer.toString(exp))
@@ -99,7 +99,7 @@ public class PlayerData {
 
             BarAPI.setMessage(player, newMessage, percent);
 
-            time = McMExtras.getInstance().getConfig().getInt("Experience Bar.disappear");
+            time = McMMOExtras.getInstance().getConfig().getInt("Experience Bar.disappear");
         } catch (Exception e) {
             e.printStackTrace();
         }

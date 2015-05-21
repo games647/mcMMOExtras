@@ -7,7 +7,7 @@
     <artifactId>mcmmoextras</artifactId>
     <packaging>jar</packaging>
 
-    <name>McMExtras</name>
+    <name>McMMOExtras</name>
     <version>2.2</version>
     <inceptionYear>2013</inceptionYear>
     <description>A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.</description>
