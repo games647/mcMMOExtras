@@ -70,7 +70,9 @@ public class PlayerData {
 
         ChatColor color = ChatColor.GOLD;
         if (McMExtras.getInstance().getConfig().isString("Experience Bar.Color." + lastUsedSkill)) {
+            //specific color for a skill type
             String configColor = McMExtras.getInstance().getConfig().getString("Experience Bar.Color." + lastUsedSkill);
+            //filter the color char; otherwise we won't detect the color
             color = ChatColor.getByChar(configColor.replace("&", ""));
         }
 
@@ -79,6 +81,7 @@ public class PlayerData {
         float percent = calculatePercent(exp, requiredExp);
 
         String level = Integer.toString(ExperienceAPI.getLevel(player, lastUsedSkill));
+        //custom variable replacement
         String format = McMExtras.getInstance().getConfig().getString("Experience Bar.Format")
                 .replace("@skill", lastUsedSkill)
                 .replace("@level", level)
@@ -89,7 +92,8 @@ public class PlayerData {
             String newMessage = color + format;
             String oldMessage = BarAPI.getMessage(player);
             if (!newMessage.equals(oldMessage)) {
-                //trigger an update to BarAPI; Otherwise it would just ignore it
+                //if the player level ups the message would be different. BarAPI doesn't update the message if the player
+                //already has a bar
                 BarAPI.removeBar(player);
             }
 
