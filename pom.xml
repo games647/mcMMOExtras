@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.xeroun</groupId>
+    <!--This have to be in lowercase because it's used by plugin.yml-->
+    <artifactId>mcmmoextras</artifactId>
+    <packaging>jar</packaging>
+
+    <name>McMExtras</name>
+    <version>2.2</version>
+    <inceptionYear>2013</inceptionYear>
+    <description>A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.</description>
+    <url>http://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/games647/McMExtras/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/games647/McMExtras</url>
+        <connection>scm:git:git://github.com/games647/McMExtras.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:games647/McMExtras.git</developerConnection>
+    </scm>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <!--Just use the project name to replace an old version of the plugin if the user does only copy-paste-->
+        <finalName>${project.name}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <!--So many people still use Java 6 ;( http://mcstats.org/global/#Java+Version-->
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <!--false means actual true http://jira.codehaus.org/browse/MCOMPILER-209-->
+                    <useIncrementalCompilation>false</useIncrementalCompilation>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--Replace variables-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <repositories>
+        <!--Bukkit-Server-API-->
+        <repository>
+            <id>md_5-releases</id>
+            <url>http://repo.md-5.net/content/groups/public/</url>
+        </repository>
+
+        <repository>
+            <id>confuser-repo</id>
+            <url>http://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!--Server API-->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <!--Compile with a low version, because the new getOnlinePlayers() won't be backwards compatibility.-->
+            <!--while the older version still exists-->
+            <version>1.7.9-R0.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gmail.nossr50.mcMMO</groupId>
+            <artifactId>mcMMO</artifactId>
+            <version>1.5.01-SNAPSHOT</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>me.confuser</groupId>
+            <artifactId>BarAPI</artifactId>
+            <version>3.3</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

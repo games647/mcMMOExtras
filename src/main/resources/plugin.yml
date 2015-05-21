@@ -1,0 +1,32 @@
+# project informations for Bukkit in order to register our plugin with all it components
+# ${project.name} are variables from Maven (pom.xml) which will be replaced after the build
+name: ${project.name}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.${project.name}
+
+# meta informations for plugin managers
+authors: [Xeroun, games647, 'https://github.com/games647/mcMMOExtras/graphs/contributors']
+description: |
+    ${project.description}
+website: ${project.url}
+dev-url: ${project.url}
+
+# depending on them - load after them to make sure they are initialized
+# Check if they are available with custom error messages
+softdepend: [mcMMO, barAPI]
+
+# Root commands to register automatically to Bukkit
+commands:
+    ${project.artifactId}:
+        description: 'Shows information about the plugin'
+    expbar:
+        description: 'Toggles the expbar'
+
+# Permission managment
+permissions:
+    ${project.artifactId}.*:
+        description: 'Gives all access to the plugin'
+        children:
+            ${project.artifactId}.expbar: true
+    ${project.artifactId}.expbar:
+        description: 'Allows players to see the exp bar'
