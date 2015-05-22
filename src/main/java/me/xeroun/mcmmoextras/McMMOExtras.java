@@ -12,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class McMMOExtras extends JavaPlugin {
 
+    private static final int CURSE_PROJECT_ID = 69564;
+
     private static McMMOExtras instance;
 
     public static McMMOExtras getInstance() {
@@ -50,6 +52,18 @@ public class McMMOExtras extends JavaPlugin {
         } else {
             //inform the users
             getLogger().log(Level.INFO, "{0} requires mcMMO and BarAPI to function.", getName());
+        }
+
+        if (getConfig().getBoolean("autoUpdate")) {
+            Updater updater = new UpdaterFix(this, getFile(), CURSE_PROJECT_ID, true, new Updater.UpdateCallback() {
+
+                @Override
+                public void onFinish(Updater updater) {
+                    if (updater.getResult() == Updater.UpdateResult.SUCCESS) {
+                        getLogger().log(Level.INFO, "Downloaded a new update ({0})", updater.getLatestName());
+                    }
+                }
+            });
         }
     }
 

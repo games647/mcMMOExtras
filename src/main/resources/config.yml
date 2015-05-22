@@ -20,3 +20,6 @@ Experience Bar:
         ACROBATICS: 'c'
         SMELTING: '7'
         ALCHEMY: '9'
+
+# Should the plugin automatically download a update from the project if it's available
+autoUpdate: true
