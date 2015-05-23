@@ -1,25 +1,32 @@
 # Welcome to the ${project.name} configuration file!
 
-Experience Bar:
-    Format: '@skill (Level @level)'
+bar:
+    format: '@skill (Level @level)'
     # Seconds until disappear
     disappear: 15
     # Colorize the skill name
-    Color:
-        MINING: '3'
-        WOODCUTTING: 'a'
-        HERBALISM: '2'
-        EXCAVATION: '6'
-        FISHING: '1'
-        UNARMED: 'd'
-        SWORDS: 'c'
-        TAMING: 'f'
-        ARCHERY: '5'
-        AXES: '4'
-        REPAIR: 'd'
-        ACROBATICS: 'c'
-        SMELTING: '7'
-        ALCHEMY: '9'
+    color:
+        mining: '3'
+        woodcutting: 'a'
+        herbalism: '2'
+        excavation: '6'
+        fishing: '1'
+        unarmed: 'd'
+        swords: 'c'
+        taming: 'f'
+        archery: '5'
+        axes: '4'
+        repair: 'd'
+        acrobatics: 'c'
+        smelting: '7'
+        alchemy: '9'
 
 # Should the plugin automatically download a update from the project if it's available
 autoUpdate: true
+
+# permission based max levels
+permissions:
+    # permission group
+    guest:
+        # skill type: max level to show the level in the bar
+        unarmed: 100

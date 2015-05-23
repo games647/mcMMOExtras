@@ -60,12 +60,13 @@
     </build>
 
     <repositories>
-        <!--Bukkit-Server-API-->
+        <!--Bukkit-Server-API and mcMMO-->
         <repository>
             <id>md_5-releases</id>
             <url>http://repo.md-5.net/content/groups/public/</url>
         </repository>
 
+        <!--barAPI-->
         <repository>
             <id>confuser-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -90,10 +91,19 @@
             <optional>true</optional>
         </dependency>
 
+        <!--API to show the dragon/wither boss bar-->
         <dependency>
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
             <version>3.3</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!--API for economy variables-->
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.5</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

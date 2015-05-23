@@ -68,41 +68,44 @@ public class PlayerData {
             return;
         }
 
-        ChatColor color = ChatColor.GOLD;
-        if (McMMOExtras.getInstance().getConfig().isString("Experience Bar.Color." + lastUsedSkill)) {
-            //specific color for a skill type
-            String configColor = McMMOExtras.getInstance().getConfig().getString("Experience Bar.Color." + lastUsedSkill);
-            //filter the color char; otherwise we won't detect the color
-            color = ChatColor.getByChar(configColor.replace("&", ""));
-        }
-
         int exp = ExperienceAPI.getXP(player, lastUsedSkill);
         int requiredExp = ExperienceAPI.getXPToNextLevel(player, lastUsedSkill);
         float percent = calculatePercent(exp, requiredExp);
 
+        String newMessage = formatMessage(player, exp, requiredExp, percent);
+        String oldMessage = BarAPI.getMessage(player);
+        if (!newMessage.equals(oldMessage)) {
+            //if the player level ups the message would be different. BarAPI doesn't update the message if the player
+            //already has a bar
+            BarAPI.removeBar(player);
+        }
+
+        BarAPI.setMessage(player, newMessage, percent);
+
+        time = McMMOExtras.getInstance().getConfig().getInt("bar.disappear");
+    }
+
+    private String formatMessage(Player player, int exp, int requiredExp, float percent) {
+        //default value
+        ChatColor color = ChatColor.GOLD;
+        String colorPath = "bar.color." + lastUsedSkill.toLowerCase();
+        if (McMMOExtras.getInstance().getConfig().isString(colorPath)) {
+            //specific color for a skill type
+            String configColor = McMMOExtras.getInstance().getConfig().getString(colorPath);
+            //filter the color char; otherwise we won't detect the color
+            color = ChatColor.getByChar(configColor.replace("&", ""));
+        }
+
         String level = Integer.toString(ExperienceAPI.getLevel(player, lastUsedSkill));
         //custom variable replacement
-        String format = McMMOExtras.getInstance().getConfig().getString("Experience Bar.Format")
+        String format = McMMOExtras.getInstance().getConfig().getString("bar.format")
                 .replace("@skill", lastUsedSkill)
                 .replace("@level", level)
                 .replace("@exp", Integer.toString(exp))
                 .replace("@reqExp", Integer.toString(requiredExp))
                 .replace("@percent", Float.toString(percent));
-        try {
-            String newMessage = color + format;
-            String oldMessage = BarAPI.getMessage(player);
-            if (!newMessage.equals(oldMessage)) {
-                //if the player level ups the message would be different. BarAPI doesn't update the message if the player
-                //already has a bar
-                BarAPI.removeBar(player);
-            }
 
-            BarAPI.setMessage(player, newMessage, percent);
-
-            time = McMMOExtras.getInstance().getConfig().getInt("Experience Bar.disappear");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return color + format;
     }
 
     private float calculatePercent(int exp, int requiredExp) {

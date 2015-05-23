@@ -1,11 +1,13 @@
 package me.xeroun.mcmmoextras.expbar;
 
+import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
 import me.xeroun.mcmmoextras.McMMOExtras;
 import me.xeroun.mcmmoextras.PlayerData;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -19,11 +21,18 @@ public class ExpBarEvents implements Listener {
 
             @Override
             public void run() {
-                String playerName = xpGainEvent.getPlayer().getName();
-                PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
+                Player player = xpGainEvent.getPlayer();
 
-                playerData.setLastUsedSkill(xpGainEvent.getSkill().name());
-                playerData.updateExpBar();
+                String playerName = player.getName();
+                String skillname = xpGainEvent.getSkill().getName();
+
+                int level = ExperienceAPI.getLevel(player, skillname);
+                if (level <= McMMOExtras.getInstance().getMaxSkillLevel(player, skillname)) {
+                    PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
+
+                    playerData.setLastUsedSkill(skillname);
+                    playerData.updateExpBar();
+                }
             }
         }, 1L);
     }
