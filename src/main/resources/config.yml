@@ -24,6 +24,9 @@ bar:
 # Should the plugin automatically download a update from the project if it's available
 autoUpdate: true
 
+# Checks the region the player is in and shows only if the skill is listed in a flag there
+useWorldGuardFlags: false
+
 # permission based max levels
 permissions:
     # permission group

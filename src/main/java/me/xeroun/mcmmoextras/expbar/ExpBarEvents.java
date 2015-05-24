@@ -27,7 +27,10 @@ public class ExpBarEvents implements Listener {
                 String skillname = xpGainEvent.getSkill().getName();
 
                 int level = ExperienceAPI.getLevel(player, skillname);
-                if (level <= McMMOExtras.getInstance().getMaxSkillLevel(player, skillname)) {
+                //permission based max levels
+                if (level <= McMMOExtras.getInstance().getMaxSkillLevel(player, skillname)
+                        //world guard region flag check
+                        && !McMMOExtras.getInstance().isForbiddenSkillInRegion(player, skillname)) {
                     PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
 
                     playerData.setLastUsedSkill(skillname);

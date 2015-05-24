@@ -11,6 +11,8 @@ import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +28,10 @@ public class McMMOExtras extends JavaPlugin {
     }
 
     private final Map<String, PlayerData> data = Maps.newHashMap();
+
+    //optional dependencies
     private Permission permission = null;
+    private WorldGuardFlagSupport regionsWhitelist;
 
     public PlayerData getData(String player) {
         PlayerData playerData = data.get(player);
@@ -70,6 +75,7 @@ public class McMMOExtras extends JavaPlugin {
             getCommand("expbar").setExecutor(new ExpBarCommands(this));
 
             setupPermissions();
+            registerWorldGuardFlag();
         } else {
             //inform the users
             getLogger().log(Level.INFO, "{0} requires mcMMO and BarAPI to function.", getName());
@@ -83,6 +89,14 @@ public class McMMOExtras extends JavaPlugin {
 
         //Prevent memory leaks; see this http://bukkit.org/threads/how-to-make-your-plugin-better.77899/
         instance = null;
+    }
+
+    public boolean isForbiddenSkillInRegion(Player player, String skill) {
+        if (regionsWhitelist != null) {
+            return regionsWhitelist.isForbiddenSkillInRegion(player, skill);
+        }
+
+        return true;
     }
 
     public int getMaxSkillLevel(Player player, String skill) {
@@ -107,5 +121,20 @@ public class McMMOExtras extends JavaPlugin {
         }
 
         return (permission != null);
+    }
+
+    private void registerWorldGuardFlag() {
+        if (getConfig().getBoolean("useWorldGuardFlags")) {
+            PluginManager pluginManager = getServer().getPluginManager();
+
+            Plugin worldGuardPlugin = pluginManager.getPlugin("WorldGuard");
+            Plugin customFlagsPlugin = pluginManager.getPlugin("WGCustomFlags");
+            if (worldGuardPlugin == null || customFlagsPlugin == null) {
+                getLogger().warning("Using world guards flags requires the plugin WGCustomFlags and WorldGuard");
+            } else {
+                regionsWhitelist = new WorldGuardFlagSupport(worldGuardPlugin, customFlagsPlugin);
+                regionsWhitelist.registerWorldGuardFlag();
+            }
+        }
     }
 }

@@ -65,6 +65,7 @@ public class PlayerData {
 
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
+            //player went offline
             return;
         }
 

@@ -10,22 +10,24 @@
     <name>McMMOExtras</name>
     <version>2.3</version>
     <inceptionYear>2013</inceptionYear>
-    <description>A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.</description>
     <url>http://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
-
+    <description>
+        A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.
+    </description>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/games647/McMExtras/issues</url>
+        <url>https://github.com/games647/McMMOExtras/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/games647/McMExtras</url>
-        <connection>scm:git:git://github.com/games647/McMExtras.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:games647/McMExtras.git</developerConnection>
+        <url>https://github.com/games647/McMMOExtras</url>
+        <connection>scm:git:git://github.com/games647/McMMOExtras.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:games647/McMMOExtras.git</developerConnection>
     </scm>
 
     <build>
@@ -71,6 +73,12 @@
             <id>confuser-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
         </repository>
+
+        <!--WGCustomFlags-->
+        <repository>
+            <id>elmakers-repo</id>
+            <url>http://maven.elmakers.com/repository/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -104,6 +112,14 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.5</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!--Custom Flags for WorldGuard-->
+        <dependency>
+            <groupId>com.mewin</groupId>
+            <artifactId>WGCustomFlags</artifactId>
+            <version>1.6.1</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
