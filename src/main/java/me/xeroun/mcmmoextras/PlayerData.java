@@ -33,7 +33,7 @@ public class PlayerData {
 
                 time--;
                 if (time <= 0) {
-                    final Player player = Bukkit.getPlayer(playerName);
+                    final Player player = Bukkit.getPlayerExact(playerName);
                     if (player == null) {
                         //Player went offline
                         cancel();
@@ -63,7 +63,7 @@ public class PlayerData {
             return;
         }
 
-        Player player = Bukkit.getPlayer(playerName);
+        Player player = Bukkit.getPlayerExact(playerName);
         if (player == null) {
             //player went offline
             return;
