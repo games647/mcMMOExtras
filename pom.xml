@@ -14,7 +14,7 @@
     <description>
         A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.
     </description>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -104,6 +104,15 @@
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
             <version>3.3</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>bossbar</artifactId>
+            <version>1.0.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/BossBarAPI_v1.0.3.jar</systemPath>
             <optional>true</optional>
         </dependency>
 

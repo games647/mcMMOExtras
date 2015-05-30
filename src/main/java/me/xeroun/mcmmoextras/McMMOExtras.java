@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
 import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
+import me.xeroun.mcmmoextras.expbar.ExpbarBridge;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -32,6 +33,7 @@ public class McMMOExtras extends JavaPlugin {
     //optional dependencies
     private Permission permission = null;
     private WorldGuardFlagSupport regionsWhitelist;
+    private ExpbarBridge expbarBridge;
 
     public PlayerData getData(String player) {
         PlayerData playerData = data.get(player);
@@ -65,7 +67,7 @@ public class McMMOExtras extends JavaPlugin {
 
         //check the dependencies
         if (getServer().getPluginManager().isPluginEnabled("mcMMO")
-                && getServer().getPluginManager().isPluginEnabled("BarAPI")) {
+                && initializeBarAPI()) {
             //create a config only if there is none
             saveDefaultConfig();
 
@@ -78,7 +80,7 @@ public class McMMOExtras extends JavaPlugin {
             registerWorldGuardFlag();
         } else {
             //inform the users
-            getLogger().log(Level.INFO, "{0} requires mcMMO and BarAPI to function.", getName());
+            getLogger().log(Level.INFO, "{0} requires mcMMO and BarAPI or BossBarAPI to function.", getName());
         }
     }
 
@@ -91,12 +93,16 @@ public class McMMOExtras extends JavaPlugin {
         instance = null;
     }
 
+    public ExpbarBridge getExpbarBridge() {
+        return expbarBridge;
+    }
+
     public boolean isForbiddenSkillInRegion(Player player, String skill) {
         if (regionsWhitelist != null) {
             return regionsWhitelist.isForbiddenSkillInRegion(player, skill);
         }
 
-        return true;
+        return false;
     }
 
     public int getMaxSkillLevel(Player player, String skill) {
@@ -136,5 +142,18 @@ public class McMMOExtras extends JavaPlugin {
                 regionsWhitelist.registerWorldGuardFlag();
             }
         }
+    }
+
+    private boolean initializeBarAPI() {
+        //load priority. If this plugin is found use it in order to fix the not see bug
+        if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
+            expbarBridge = new ExpbarBridge(true);
+            return true;
+        } else if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
+            expbarBridge = new ExpbarBridge(false);
+            return true;
+        }
+
+        return false;
     }
 }

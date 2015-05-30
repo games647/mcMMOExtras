@@ -1,6 +1,5 @@
 package me.xeroun.mcmmoextras.expbar;
 
-import me.confuser.barapi.BarAPI;
 import me.xeroun.mcmmoextras.McMMOExtras;
 import me.xeroun.mcmmoextras.PlayerData;
 
@@ -35,7 +34,7 @@ public class ExpBarCommands implements CommandExecutor {
             if (data.isEnabled()) {
                 //disable it
                 player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been disabled.");
-                BarAPI.removeBar(player);
+                plugin.getExpbarBridge().removeBar(player);
                 data.setEnabled(false);
             } else {
                 //enable it

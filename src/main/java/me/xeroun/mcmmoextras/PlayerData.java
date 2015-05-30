@@ -2,8 +2,6 @@ package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 
-import me.confuser.barapi.BarAPI;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,7 +38,7 @@ public class PlayerData {
                         return;
                     }
 
-                    BarAPI.removeBar(player);
+                    McMMOExtras.getInstance().getExpbarBridge().removeBar(player);
                 }
             }
         }.runTaskTimer(McMMOExtras.getInstance(), 0, 20L);
@@ -74,14 +72,8 @@ public class PlayerData {
         float percent = calculatePercent(exp, requiredExp);
 
         String newMessage = formatMessage(player, exp, requiredExp, percent);
-        String oldMessage = BarAPI.getMessage(player);
-        if (!newMessage.equals(oldMessage)) {
-            //if the player level ups the message would be different. BarAPI doesn't update the message if the player
-            //already has a bar
-            BarAPI.removeBar(player);
-        }
 
-        BarAPI.setMessage(player, newMessage, percent);
+        McMMOExtras.getInstance().getExpbarBridge().setMessage(player, newMessage, percent);
 
         time = McMMOExtras.getInstance().getConfig().getInt("bar.disappear");
     }
