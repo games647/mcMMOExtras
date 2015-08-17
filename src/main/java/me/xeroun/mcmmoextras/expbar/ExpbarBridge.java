@@ -31,10 +31,6 @@ public class ExpbarBridge {
 
     public void setMessage(Player player, String newMessage, float percent) {
         if (useBossBar) {
-            if (hasBar(player)) {
-                BossBarAPI.setHealth(player, percent);
-            }
-
             BossBarAPI.setMessage(player, newMessage, percent);
         } else {
             String oldMessage = BarAPI.getMessage(player);

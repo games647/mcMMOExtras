@@ -19,29 +19,31 @@ public class PlayerData {
     public PlayerData(final String playerName) {
         this.playerName = playerName;
 
-        //disappear timer
-        new BukkitRunnable() {
+        if (!McMMOExtras.getInstance().getConfig().getBoolean("alwaysShow")) {
+            //disappear timer
+            new BukkitRunnable() {
 
-            @Override
-            public void run() {
-                if (!enabled) {
-                    cancel();
-                    return;
-                }
-
-                time--;
-                if (time <= 0) {
-                    final Player player = Bukkit.getPlayerExact(playerName);
-                    if (player == null) {
-                        //Player went offline
+                @Override
+                public void run() {
+                    if (!enabled) {
                         cancel();
                         return;
                     }
 
-                    McMMOExtras.getInstance().getExpbarBridge().removeBar(player);
+                    time--;
+                    if (time <= 0) {
+                        final Player player = Bukkit.getPlayerExact(playerName);
+                        if (player == null) {
+                            //Player went offline
+                            cancel();
+                            return;
+                        }
+
+                        McMMOExtras.getInstance().getExpbarBridge().removeBar(player);
+                    }
                 }
-            }
-        }.runTaskTimer(McMMOExtras.getInstance(), 0, 20L);
+            }.runTaskTimer(McMMOExtras.getInstance(), 0, 20L);
+        }
     }
 
     public boolean isEnabled() {
