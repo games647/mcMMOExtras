@@ -31,6 +31,8 @@ public class ExpbarBridge {
 
     public void setMessage(Player player, String newMessage, float percent) {
         if (useBossBar) {
+            //remove the old dragon. Otherwise the old message persists
+            BossBarAPI.removeBar(player);
             BossBarAPI.setMessage(player, newMessage, percent);
         } else {
             String oldMessage = BarAPI.getMessage(player);
