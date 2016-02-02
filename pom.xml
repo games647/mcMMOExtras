@@ -62,7 +62,13 @@
     </build>
 
     <repositories>
-        <!--barAPI-->
+        <!--BossBarApi-->
+        <repository>
+            <id>inventivetalent-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public</url>
+        </repository>
+
+        <!--BarAPI-->
         <repository>
             <id>confuser-repo</id>
             <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -109,10 +115,8 @@
 
         <dependency>
             <groupId>org.inventivetalent</groupId>
-            <artifactId>bossbar</artifactId>
-            <version>1.0.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/BossBarAPI_v1.0.3.jar</systemPath>
+            <artifactId>bossbarapi</artifactId>
+            <version>1.0.7</version>
             <optional>true</optional>
         </dependency>
 
