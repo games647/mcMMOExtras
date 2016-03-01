@@ -38,8 +38,8 @@ public class WorldGuardFlagSupport {
 
     public void registerWorldGuardFlag() {
         if (customFlagsPlugin != null) {
-            EnumFlag<SkillType> skillFlag = new EnumFlag<SkillType>("skill-show", SkillType.class);
-            skillListFlag = new SetFlag<SkillType>("skill-show", skillFlag);
+            EnumFlag<SkillType> skillFlag = new EnumFlag<>("skill-show", SkillType.class);
+            skillListFlag = new SetFlag<>("skill-show", skillFlag);
             customFlagsPlugin.addCustomFlag(skillListFlag);
         }
     }

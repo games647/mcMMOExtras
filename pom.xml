@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>McMMOExtras</name>
-    <version>2.4</version>
+    <version>3.0</version>
     <inceptionYear>2013</inceptionYear>
     <url>http://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
     <description>
@@ -17,6 +17,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--Possibility to deploy directly to the plugins folder-->
+        <outputDir>${basedir}/target</outputDir>
     </properties>
 
     <issueManagement>
@@ -39,15 +41,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.5.1</version>
                 <configuration>
-                    <!--So many people still use Java 6 ;( http://mcstats.org/global/#Java+Version-->
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <!--So many people still use Java 7 ;( http://mcstats.org/global/#Java+Version-->
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
-                    <!--false means actual true http://jira.codehaus.org/browse/MCOMPILER-209-->
-                    <useIncrementalCompilation>false</useIncrementalCompilation>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <outputDirectory>${outputDir}</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -62,22 +71,10 @@
     </build>
 
     <repositories>
-        <!--BossBarApi-->
+        <!--Bukkit API-->
         <repository>
-            <id>inventivetalent-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public</url>
-        </repository>
-
-        <!--BarAPI-->
-        <repository>
-            <id>confuser-repo</id>
-            <url>http://ci.frostcast.net/plugin/repository/everything</url>
-        </repository>
-
-        <!--Bukkit-Server-API and mcMMO-->
-        <repository>
-            <id>md_5-releases</id>
-            <url>http://repo.md-5.net/content/groups/public/</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
 
         <!--WGCustomFlags-->
@@ -85,23 +82,39 @@
             <id>elmakers-repo</id>
             <url>http://maven.elmakers.com/repository/</url>
         </repository>
+
+        <!--BossBarApi-->
+        <repository>
+            <id>inventivetalent-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public</url>
+        </repository>
+
+        <!--BarAPI-->
+<!--        <repository>
+            <id>confuser-repo</id>
+            <url>http://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>-->
+
+        <!--mcMMO-->
+        <repository>
+            <id>md_5-releases</id>
+            <url>http://repo.md-5.net/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <!--Server API-->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <!--Compile with a low version, because the new getOnlinePlayers() won't be backwards compatibility.-->
-            <!--while the older version still exists-->
-            <version>1.7.9-R0.2</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.9-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.gmail.nossr50.mcMMO</groupId>
             <artifactId>mcMMO</artifactId>
-            <version>1.5.01-SNAPSHOT</version>
+            <version>1.5.04-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
 
@@ -109,7 +122,7 @@
         <dependency>
             <groupId>me.confuser</groupId>
             <artifactId>BarAPI</artifactId>
-            <version>3.4-SNAPSHOT</version>
+            <version>3.0</version>
             <optional>true</optional>
         </dependency>
 

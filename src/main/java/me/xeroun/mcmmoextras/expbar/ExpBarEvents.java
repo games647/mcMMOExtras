@@ -42,6 +42,6 @@ public class ExpBarEvents implements Listener {
 
     @EventHandler
     public void onLogout(PlayerQuitEvent quitEvent) {
-        McMMOExtras.getInstance().clearData(quitEvent.getPlayer().getName());
+        McMMOExtras.getInstance().clearData(quitEvent.getPlayer());
     }
 }

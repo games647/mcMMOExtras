@@ -39,7 +39,7 @@ public class PlayerData {
                             return;
                         }
 
-                        McMMOExtras.getInstance().getExpbarBridge().removeBar(player);
+                        McMMOExtras.getInstance().getBossAPI().removeBar(player);
                     }
                 }
             }.runTaskTimer(McMMOExtras.getInstance(), 0, 20L);
@@ -75,7 +75,7 @@ public class PlayerData {
 
         String newMessage = formatMessage(player, exp, requiredExp, percent);
 
-        McMMOExtras.getInstance().getExpbarBridge().setMessage(player, newMessage, percent);
+        McMMOExtras.getInstance().getBossAPI().setMessage(player, newMessage, percent);
 
         time = McMMOExtras.getInstance().getConfig().getInt("bar.disappear");
     }
