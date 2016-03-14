@@ -43,7 +43,7 @@ public class SpigotBar implements BossAPI {
     public void removeBar(Player player) {
         BossBar bar = bossbars.remove(player.getUniqueId());
         if (bar != null) {
-            bar.hide();
+            bar.setVisible(false);
         }
     }
 
@@ -57,6 +57,7 @@ public class SpigotBar implements BossAPI {
             bossbars.put(uniqueId, bar);
         } else {
             bar.setTitle(newMessage);
+            bar.setProgress(percent / 100);
         }
     }
 }
