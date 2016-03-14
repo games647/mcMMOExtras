@@ -26,8 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class McMMOExtras extends JavaPlugin {
 
-    private static final int CURSE_PROJECT_ID = 69564;
-
     private static McMMOExtras instance;
 
     public static McMMOExtras getInstance() {
@@ -61,18 +59,6 @@ public class McMMOExtras extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (getConfig().getBoolean("autoUpdate")) {
-            Updater updater = new UpdaterFix(this, getFile(), CURSE_PROJECT_ID, true, new Updater.UpdateCallback() {
-
-                @Override
-                public void onFinish(Updater updater) {
-                    if (updater.getResult() == Updater.UpdateResult.SUCCESS) {
-                        getLogger().log(Level.INFO, "Downloaded a new update ({0})", updater.getLatestName());
-                    }
-                }
-            });
-        }
-
         //check the dependencies
         if (getServer().getPluginManager().isPluginEnabled("mcMMO") && initializeBarAPI()) {
             //create a config only if there is none
@@ -117,7 +103,7 @@ public class McMMOExtras extends JavaPlugin {
     }
 
     public int getMaxSkillLevel(Player player, String skill) {
-        if (permission == null) {
+        if (permission == null || !permission.hasGroupSupport()) {
             //vault hasn't found
             return Integer.MAX_VALUE;
         }
@@ -157,14 +143,14 @@ public class McMMOExtras extends JavaPlugin {
 
     private boolean initializeBarAPI() {
         //load priority. If this plugin is found use it in order to fix the not see bug
-        if (ClassUtil.isPresent(BossBar.class.getName())) {
-            bossAPI = new SpigotBar(getConfig());
-            return true;
-        } else if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
+        if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
             bossAPI = new BarAPI();
             return true;
         } else if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
-            bossAPI = new BossBarMessageAPI();
+            bossAPI = new BossBarMessageAPI(getConfig());
+            return true;
+        } else if (ClassUtil.isPresent(BossBar.class.getName())) {
+            bossAPI = new SpigotBar(getConfig());
             return true;
         }
 

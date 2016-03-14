@@ -34,9 +34,6 @@ permissions:
         # skill type: max level to show the level in the bar
         unarmed: 100
 
-# Should the plugin automatically download a update from the project if it's available
-autoUpdate: true
-
 # 1.9+ only settings
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
 segments: SOLID

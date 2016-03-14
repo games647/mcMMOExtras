@@ -23,8 +23,11 @@ An Exp Bar
 ## Requirements
 
 * Plugin: mcMMO (http://dev.bukkit.org/bukkit-plugins/mcmmo/)
+
+* Spigot (including all folks) 1.9
+or one of these
+* Plugin: BossBarAPI (http://www.spigotmc.org/resources/api-bossbarapi.7504/)
 * Plugin: barAPI (http://dev.bukkit.org/bukkit-plugins/bar-api/)
-* Plugin: Alternative to barAPI: BossBarAPI (http://www.spigotmc.org/resources/api-bossbarapi.7504/)
 
 ## Commands
 
