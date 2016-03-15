@@ -11,7 +11,7 @@ import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
 import me.xeroun.mcmmoextras.expbar.plugins.BarAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossBarMessageAPI;
-import me.xeroun.mcmmoextras.expbar.plugins.SpigotBar;
+import me.xeroun.mcmmoextras.expbar.plugins.SpigotBarApi;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -54,7 +54,7 @@ public class McMMOExtras extends JavaPlugin {
     public void clearData(Player player) {
         data.remove(player.getName());
 
-        instance.getBossAPI().removeBar(player);
+        instance.getBossAPI().removeBar(player, null);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class McMMOExtras extends JavaPlugin {
         instance = null;
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            bossAPI.removeBar(onlinePlayer);
+            bossAPI.removeBar(onlinePlayer, null);
         }
     }
 
@@ -150,7 +150,7 @@ public class McMMOExtras extends JavaPlugin {
             bossAPI = new BossBarMessageAPI(getConfig());
             return true;
         } else if (ClassUtil.isPresent(BossBar.class.getName())) {
-            bossAPI = new SpigotBar(getConfig());
+            bossAPI = new SpigotBarApi(getConfig());
             return true;
         }
 

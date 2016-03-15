@@ -40,3 +40,6 @@ segments: SOLID
 
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
 color: PURPLE
+
+# How many bars should be displayed at the same time
+concurrentBars: 1

@@ -1,6 +1,7 @@
 package me.xeroun.mcmmoextras.expbar;
 
 import com.gmail.nossr50.api.ExperienceAPI;
+import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
 import me.xeroun.mcmmoextras.McMMOExtras;
@@ -24,7 +25,8 @@ public class ExpBarEvents implements Listener {
                 Player player = xpGainEvent.getPlayer();
 
                 String playerName = player.getName();
-                String skillname = xpGainEvent.getSkill().getName();
+                SkillType skill = xpGainEvent.getSkill();
+                String skillname = skill.getName();
 
                 int level = ExperienceAPI.getLevel(player, skillname);
                 //permission based max levels
@@ -33,8 +35,7 @@ public class ExpBarEvents implements Listener {
                         && !McMMOExtras.getInstance().isForbiddenSkillInRegion(player, skillname)) {
                     PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
 
-                    playerData.setLastUsedSkill(skillname);
-                    playerData.updateExpBar();
+                    playerData.updateExpBar(skill);
                 }
             }
         }, 1L);

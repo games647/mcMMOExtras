@@ -34,7 +34,7 @@ public class ExpBarCommands implements CommandExecutor {
             if (data.isEnabled()) {
                 //disable it
                 player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been disabled.");
-                plugin.getBossAPI().removeBar(player);
+                plugin.getBossAPI().removeBar(player, null);
                 data.setEnabled(false);
             } else {
                 //enable it
