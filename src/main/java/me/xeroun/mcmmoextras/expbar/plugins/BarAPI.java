@@ -15,7 +15,7 @@ public class BarAPI implements BossAPI {
 
     @Override
     public void removeBar(Player player, SkillType skill) {
-        if (lastSkillType == null || lastSkillType == skill) {
+        if (skill == null || lastSkillType == skill) {
             me.confuser.barapi.BarAPI.removeBar(player);
         }
     }
