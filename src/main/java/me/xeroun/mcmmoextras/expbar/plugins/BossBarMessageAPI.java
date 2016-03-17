@@ -31,40 +31,44 @@ public class BossBarMessageAPI implements BossAPI {
     private Color barColor;
 
     public BossBarMessageAPI(FileConfiguration config) {
-        concurrentBars = config.getInt("concurrentBars");
+        if (BossBarAPI.is1_9) {
+            concurrentBars = config.getInt("concurrentBars");
 
-        String confSeg = config.getString("segments");
-        BarStyle bukkitSegments;
-        try {
-            bukkitSegments = BarStyle.valueOf(confSeg.toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            bukkitSegments = BarStyle.SOLID;
-        }
+            String confSeg = config.getString("segments");
+            BarStyle bukkitSegments;
+            try {
+                bukkitSegments = BarStyle.valueOf(confSeg.toUpperCase());
+            } catch (IllegalArgumentException argumentException) {
+                bukkitSegments = BarStyle.SOLID;
+            }
 
-        switch (bukkitSegments) {
-            case SEGMENTED_6:
-                segments = Style.NOTCHED_6;
-                break;
-            case SEGMENTED_10:
-                segments = Style.NOTCHED_10;
-                break;
-            case SEGMENTED_12:
-                segments = Style.NOTCHED_12;
-                break;
-            case SEGMENTED_20:
-                segments = Style.NOTCHED_20;
-                break;
-            default:
-            case SOLID:
-                segments = Style.PROGRESS;
-                break;
-        }
+            switch (bukkitSegments) {
+                case SEGMENTED_6:
+                    segments = Style.NOTCHED_6;
+                    break;
+                case SEGMENTED_10:
+                    segments = Style.NOTCHED_10;
+                    break;
+                case SEGMENTED_12:
+                    segments = Style.NOTCHED_12;
+                    break;
+                case SEGMENTED_20:
+                    segments = Style.NOTCHED_20;
+                    break;
+                default:
+                case SOLID:
+                    segments = Style.PROGRESS;
+                    break;
+            }
 
-        String confColor = config.getString("color");
-        try {
-            barColor = Color.valueOf(confColor.toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            barColor = Color.BLUE;
+            String confColor = config.getString("color");
+            try {
+                barColor = Color.valueOf(confColor.toUpperCase());
+            } catch (IllegalArgumentException argumentException) {
+                barColor = Color.BLUE;
+            }
+        } else {
+            concurrentBars = 1;
         }
     }
 
@@ -79,19 +83,23 @@ public class BossBarMessageAPI implements BossAPI {
             if (skill == null || lastUsedSkill == skill) {
                 BossBarAPI.removeAllBars(player);
             }
-        } else {
-            if (skill == null) {
-                EnumMap<SkillType, BossBar> skillBars = bossbars.remove(player.getUniqueId());
+        } else if (skill == null) {
+            EnumMap<SkillType, BossBar> skillBars = bossbars.remove(player.getUniqueId());
+            if (skillBars != null) {
                 for (BossBar bar : skillBars.values()) {
                     bar.setVisible(false);
                 }
-            } else {
-                EnumMap<SkillType, BossBar> skillBars = bossbars.get(player.getUniqueId());
+            }
+
+        } else {
+            EnumMap<SkillType, BossBar> skillBars = bossbars.get(player.getUniqueId());
+            if (skillBars != null) {
                 BossBar bar = skillBars.get(skill);
                 if (bar != null) {
                     bar.setVisible(false);
                 }
             }
+
         }
     }
 
