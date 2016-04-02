@@ -121,27 +121,30 @@ public class SpigotBarApi implements BossAPI {
         if (defaultBarColor == null) {
             defaultBarColor = BarColor.BLUE;
         }
+
+        System.out.println("SEGMENTS: " + specificStyle);
+        System.out.println("COLOR: " + specificColor);
     }
 
     private BarColor parseColor(String name) {
-        if (name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return null;
         }
 
         try {
-            return BarColor.valueOf(name.toUpperCase());
+            return BarColor.valueOf(name.trim().toUpperCase());
         } catch (IllegalArgumentException argumentException) {
             return null;
         }
     }
 
     private BarStyle parseStyle(String name) {
-        if (name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return null;
         }
 
         try {
-            return BarStyle.valueOf(name.toUpperCase());
+            return BarStyle.valueOf(name.trim().toUpperCase());
         } catch (IllegalArgumentException argumentException) {
             return null;
         }

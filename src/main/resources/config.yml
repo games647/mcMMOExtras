@@ -22,40 +22,40 @@ bar:
         alchemy: '9'
     # 1.9+ only settings
     # If the value is empty it will be ignored
-    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
     barColor:
-        mining: '3'
-        woodcutting: 'a'
-        herbalism: '2'
-        excavation: '6'
-        fishing: '1'
-        unarmed: 'd'
-        swords: 'c'
-        taming: 'f'
-        archery: '5'
-        axes: '4'
-        repair: 'd'
-        acrobatics: 'c'
-        smelting: '7'
-        alchemy: '9'
+        mining: 'GREEN '
+        woodcutting: 'GREEN'
+        herbalism: 'GREEN'
+        excavation: 'GREEN'
+        fishing: 'GREEN'
+        unarmed: 'GREEN'
+        swords: 'GREEN'
+        taming: 'GREEN'
+        archery: 'GREEN'
+        axes: 'GREEN'
+        repair: 'GREEN'
+        acrobatics: 'GREEN'
+        smelting: 'GREEN'
+        alchemy: 'GREEN'
     # 1.9+ only settings
     # If the value is empty it will be ignored
-    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
     segments:
-        mining: '3'
-        woodcutting: 'a'
-        herbalism: '2'
-        excavation: '6'
-        fishing: '1'
-        unarmed: 'd'
-        swords: 'c'
-        taming: 'f'
-        archery: '5'
-        axes: '4'
-        repair: 'd'
-        acrobatics: 'c'
-        smelting: '7'
-        alchemy: '9'
+        mining: 'SOLID'
+        woodcutting: 'SOLID'
+        herbalism: 'SOLID'
+        excavation: 'SOLID'
+        fishing: 'SOLID'
+        unarmed: 'SOLID'
+        swords: 'SOLID'
+        taming: 'SOLID'
+        archery: 'SOLID'
+        axes: 'SOLID'
+        repair: 'SOLID'
+        acrobatics: 'SOLID'
+        smelting: 'SOLID'
+        alchemy: 'SOLID'
 
 # Should the bar always show up
 alwaysShow: false

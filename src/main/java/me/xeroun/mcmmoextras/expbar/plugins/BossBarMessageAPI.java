@@ -153,24 +153,24 @@ public class BossBarMessageAPI implements BossAPI {
     }
 
     private Color parseColor(String name) {
-        if (name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return null;
         }
 
         try {
-            return Color.valueOf(name.toUpperCase());
+            return Color.valueOf(name.trim().toUpperCase());
         } catch (IllegalArgumentException argumentException) {
             return null;
         }
     }
 
     private Style parseStyle(String name) {
-        if (name.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             return null;
         }
 
         try {
-            BarStyle bukkitStyle =  BarStyle.valueOf(name.toUpperCase());
+            BarStyle bukkitStyle =  BarStyle.valueOf(name.trim().toUpperCase());
             Style style;
             switch (bukkitStyle) {
                 case SEGMENTED_6:
