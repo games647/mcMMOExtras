@@ -121,9 +121,6 @@ public class SpigotBarApi implements BossAPI {
         if (defaultBarColor == null) {
             defaultBarColor = BarColor.BLUE;
         }
-
-        System.out.println("SEGMENTS: " + specificStyle);
-        System.out.println("COLOR: " + specificColor);
     }
 
     private BarColor parseColor(String name) {
