@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 
 import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -127,7 +128,7 @@ public class BossBarMessageAPI implements BossAPI {
             bar.addPlayer(player);
             skillBars.put(skill, bar);
         } else {
-            bar.setMessage(newMessage);
+            bar.setMessage(ComponentSerializer.toString(new TextComponent(newMessage)));
             bar.setVisible(true);
         }
 
