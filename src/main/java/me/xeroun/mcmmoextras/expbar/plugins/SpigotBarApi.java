@@ -21,25 +21,17 @@ public class SpigotBarApi implements BossAPI {
     private final Map<UUID, EnumMap<SkillType, BossBar>> bossbars = Maps.newHashMap();
     private final LinkedList<BossBar> oldBars = Lists.newLinkedList();
     private final int concurrentBars;
-    private BarStyle segments;
-    private BarColor barColor;
+
+    private final Map<SkillType, BarStyle> specificStyle = Maps.newEnumMap(SkillType.class);
+    private final Map<SkillType, BarColor> specificColor = Maps.newEnumMap(SkillType.class);
+
+    private BarStyle defaultStyle;
+    private BarColor defaultBarColor;
 
     public SpigotBarApi(FileConfiguration config) {
         concurrentBars = config.getInt("concurrentBars");
 
-        String confSeg = config.getString("segments");
-        try {
-            segments = BarStyle.valueOf(confSeg.toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            segments = BarStyle.SOLID;
-        }
-
-        String confColor = config.getString("color");
-        try {
-            barColor = BarColor.valueOf(confColor.toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            barColor = BarColor.BLUE;
-        }
+        parseSpecificConfig(config);
     }
 
     @Override
@@ -79,7 +71,17 @@ public class SpigotBarApi implements BossAPI {
 
         BossBar bar = skillBars.get(skill);
         if (bar == null) {
-            bar = Bukkit.createBossBar(newMessage, barColor, segments);
+            BarStyle style = specificStyle.get(skill);
+            if (style == null) {
+                style = defaultStyle;
+            }
+
+            BarColor color = specificColor.get(skill);
+            if (style == null) {
+                color = defaultBarColor;
+            }
+
+            bar = Bukkit.createBossBar(newMessage, color, style);
             bar.addPlayer(player);
             skillBars.put(skill, bar);
         } else {
@@ -93,6 +95,55 @@ public class SpigotBarApi implements BossAPI {
         if (oldBars.size() > concurrentBars) {
             BossBar removed = oldBars.removeFirst();
             removed.setVisible(false);
+        }
+    }
+
+    private void parseSpecificConfig(FileConfiguration config) {
+        for (SkillType skillType : SkillType.values()) {
+            String skillName = skillType.getName().toLowerCase();
+            BarColor color = parseColor(config.getString("bar.barColor." + skillName));
+            if (color != null) {
+                specificColor.put(skillType, color);
+            }
+
+            BarStyle style = parseStyle(config.getString("bar.segments." + skillName));
+            if (style != null) {
+                specificStyle.put(skillType, style);
+            }
+        }
+
+        defaultStyle = parseStyle(config.getString("segments"));
+        if (defaultStyle == null) {
+            defaultStyle = BarStyle.SOLID;
+        }
+
+        defaultBarColor = parseColor(config.getString("color"));
+        if (defaultBarColor == null) {
+            defaultBarColor = BarColor.BLUE;
+        }
+    }
+
+    private BarColor parseColor(String name) {
+        if (name.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            return BarColor.valueOf(name.toUpperCase());
+        } catch (IllegalArgumentException argumentException) {
+            return null;
+        }
+    }
+
+    private BarStyle parseStyle(String name) {
+        if (name.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            return BarStyle.valueOf(name.toUpperCase());
+        } catch (IllegalArgumentException argumentException) {
+            return null;
         }
     }
 }

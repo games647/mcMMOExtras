@@ -16,7 +16,6 @@ import me.xeroun.mcmmoextras.expbar.plugins.SpigotBarApi;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -149,7 +148,7 @@ public class McMMOExtras extends JavaPlugin {
         } else if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
             bossAPI = new BossBarMessageAPI(getConfig());
             return true;
-        } else if (ClassUtil.isPresent(BossBar.class.getName())) {
+        } else if (ClassUtil.isPresent("org.bukkit.boss.BossBar")) {
             bossAPI = new SpigotBarApi(getConfig());
             return true;
         }

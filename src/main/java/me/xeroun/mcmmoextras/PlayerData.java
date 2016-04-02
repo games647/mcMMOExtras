@@ -30,7 +30,7 @@ public class PlayerData {
         this.enabled = enabled;
     }
 
-    public void updateExpBar(final SkillType lastUsedSkill) {
+    public void updateExpBar(SkillType lastUsedSkill) {
         if (!enabled || lastUsedSkill == null) {
             return;
         }

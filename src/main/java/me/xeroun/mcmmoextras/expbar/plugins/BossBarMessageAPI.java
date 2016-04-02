@@ -28,46 +28,17 @@ public class BossBarMessageAPI implements BossAPI {
 
     private SkillType lastUsedSkill;
 
-    private Style segments;
-    private Color barColor;
+    private final Map<SkillType, Style> specificStyle = Maps.newEnumMap(SkillType.class);
+    private final Map<SkillType, Color> specificColor = Maps.newEnumMap(SkillType.class);
+
+    private Style defaultStyle;
+    private Color defaultBarColor;
 
     public BossBarMessageAPI(FileConfiguration config) {
         if (BossBarAPI.is1_9) {
             concurrentBars = config.getInt("concurrentBars");
 
-            String confSeg = config.getString("segments");
-            BarStyle bukkitSegments;
-            try {
-                bukkitSegments = BarStyle.valueOf(confSeg.toUpperCase());
-            } catch (IllegalArgumentException argumentException) {
-                bukkitSegments = BarStyle.SOLID;
-            }
-
-            switch (bukkitSegments) {
-                case SEGMENTED_6:
-                    segments = Style.NOTCHED_6;
-                    break;
-                case SEGMENTED_10:
-                    segments = Style.NOTCHED_10;
-                    break;
-                case SEGMENTED_12:
-                    segments = Style.NOTCHED_12;
-                    break;
-                case SEGMENTED_20:
-                    segments = Style.NOTCHED_20;
-                    break;
-                default:
-                case SOLID:
-                    segments = Style.PROGRESS;
-                    break;
-            }
-
-            String confColor = config.getString("color");
-            try {
-                barColor = Color.valueOf(confColor.toUpperCase());
-            } catch (IllegalArgumentException argumentException) {
-                barColor = Color.BLUE;
-            }
+            parseSpecificConfig(config);
         } else {
             concurrentBars = 1;
         }
@@ -124,7 +95,17 @@ public class BossBarMessageAPI implements BossAPI {
 
         BossBar bar = skillBars.get(skill);
         if (bar == null) {
-            bar = BossBarAPI.addBar(player, new TextComponent(newMessage), barColor, segments, percent);
+            Style style = specificStyle.get(skill);
+            if (style == null) {
+                style = defaultStyle;
+            }
+
+            Color color = specificColor.get(skill);
+            if (style == null) {
+                color = defaultBarColor;
+            }
+
+            bar = BossBarAPI.addBar(player, new TextComponent(newMessage), color, style, percent);
             bar.addPlayer(player);
             skillBars.put(skill, bar);
         } else {
@@ -144,5 +125,75 @@ public class BossBarMessageAPI implements BossAPI {
     private void setMessageOld(Player player, SkillType skill, String newMessage, float percent) {
         BossBarAPI.setMessage(player, newMessage, percent);
         lastUsedSkill = skill;
+    }
+
+    private void parseSpecificConfig(FileConfiguration config) {
+        for (SkillType skillType : SkillType.values()) {
+            String skillName = skillType.getName().toLowerCase();
+            Color color = parseColor(config.getString("bar.barColor." + skillName));
+            if (color != null) {
+                specificColor.put(skillType, color);
+            }
+
+            Style style = parseStyle(config.getString("bar.segments." + skillName));
+            if (style != null) {
+                specificStyle.put(skillType, style);
+            }
+        }
+
+        defaultStyle = parseStyle(config.getString("segments"));
+        if (defaultStyle == null) {
+            defaultStyle = Style.PROGRESS;
+        }
+
+        defaultBarColor = parseColor(config.getString("color"));
+        if (defaultBarColor == null) {
+            defaultBarColor = Color.BLUE;
+        }
+    }
+
+    private Color parseColor(String name) {
+        if (name.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            return Color.valueOf(name.toUpperCase());
+        } catch (IllegalArgumentException argumentException) {
+            return null;
+        }
+    }
+
+    private Style parseStyle(String name) {
+        if (name.trim().isEmpty()) {
+            return null;
+        }
+
+        try {
+            BarStyle bukkitStyle =  BarStyle.valueOf(name.toUpperCase());
+            Style style;
+            switch (bukkitStyle) {
+                case SEGMENTED_6:
+                    style = Style.NOTCHED_6;
+                    break;
+                case SEGMENTED_10:
+                    style = Style.NOTCHED_10;
+                    break;
+                case SEGMENTED_12:
+                    style = Style.NOTCHED_12;
+                    break;
+                case SEGMENTED_20:
+                    style = Style.NOTCHED_20;
+                    break;
+                default:
+                case SOLID:
+                    style = Style.PROGRESS;
+                    break;
+            }
+
+            return style;
+        } catch (IllegalArgumentException argumentException) {
+            return null;
+        }
     }
 }

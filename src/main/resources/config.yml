@@ -20,6 +20,42 @@ bar:
         acrobatics: 'c'
         smelting: '7'
         alchemy: '9'
+    # 1.9+ only settings
+    # If the value is empty it will be ignored
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
+    barColor:
+        mining: '3'
+        woodcutting: 'a'
+        herbalism: '2'
+        excavation: '6'
+        fishing: '1'
+        unarmed: 'd'
+        swords: 'c'
+        taming: 'f'
+        archery: '5'
+        axes: '4'
+        repair: 'd'
+        acrobatics: 'c'
+        smelting: '7'
+        alchemy: '9'
+    # 1.9+ only settings
+    # If the value is empty it will be ignored
+    # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
+    segments:
+        mining: '3'
+        woodcutting: 'a'
+        herbalism: '2'
+        excavation: '6'
+        fishing: '1'
+        unarmed: 'd'
+        swords: 'c'
+        taming: 'f'
+        archery: '5'
+        axes: '4'
+        repair: 'd'
+        acrobatics: 'c'
+        smelting: '7'
+        alchemy: '9'
 
 # Should the bar always show up
 alwaysShow: false
@@ -35,11 +71,13 @@ permissions:
         unarmed: 100
 
 # 1.9+ only settings
+# This is value is used if no specific segments style is set (See above)
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
 segments: SOLID
 
+## This is value is used if no specific color is set (See above)
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
 color: PURPLE
 
 # How many bars should be displayed at the same time
-concurrentBars: 1
+concurrentBars: 2
