@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>McMMOExtras</name>
-    <version>5.0</version>
+    <version>5.1</version>
     <inceptionYear>2013</inceptionYear>
     <url>http://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
     <description>
@@ -115,7 +115,6 @@
             <groupId>com.gmail.nossr50.mcMMO</groupId>
             <artifactId>mcMMO</artifactId>
             <version>1.5.01-SNAPSHOT</version>
-            <optional>true</optional>
         </dependency>
 
         <!--API to show the dragon/wither boss bar-->

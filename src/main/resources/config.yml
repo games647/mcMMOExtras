@@ -1,8 +1,20 @@
 # Welcome to the ${project.name} configuration file!
 
 bar:
+    # Text format above the bar
+    # It supports the following variables
+    # @skill - Skill name
+    # @level - current level
+    # @nextLevel - next level
+    # @exp - Current exp
+    # @remainingExp - Remain exp for the next level
+    # @gainedExp - Gained exp from the last action
+    # @reqExp - Required exp for the next level
+    # @percent - Percent for the next level
     format: '@skill (Level @level)'
-    # Seconds until disappear
+    # Seconds until the bar will disappear
+    # This number will decrease for each skill
+    # So that the last used skill will disappear first
     disappear: 15
     # Colorize the skill name
     color:
@@ -60,7 +72,7 @@ bar:
 # Should the bar always show up
 alwaysShow: false
 
-# Checks the region the player is in and shows only if the skill is listed in a flag there
+# Checks the region the player is in a region and shows only if the skill is listed in a flag "show-skill" there
 useWorldGuardFlags: false
 
 # permission based max levels
@@ -75,7 +87,7 @@ permissions:
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html
 segments: SOLID
 
-## This is value is used if no specific color is set (See above)
+# This is value is used if no specific color is set (See above)
 # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html
 color: PURPLE
 

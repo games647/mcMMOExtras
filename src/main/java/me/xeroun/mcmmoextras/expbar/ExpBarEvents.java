@@ -35,7 +35,7 @@ public class ExpBarEvents implements Listener {
                         && !McMMOExtras.getInstance().isForbiddenSkillInRegion(player, skillname)) {
                     PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
 
-                    playerData.updateExpBar(skill);
+                    playerData.updateExpBar(skill, xpGainEvent.getRawXpGained());
                 }
             }
         }, 1L);

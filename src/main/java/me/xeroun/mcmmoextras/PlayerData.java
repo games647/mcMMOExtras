@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.NumberConversions;
 
 public class PlayerData {
 
@@ -30,7 +31,7 @@ public class PlayerData {
         this.enabled = enabled;
     }
 
-    public void updateExpBar(SkillType lastUsedSkill) {
+    public void updateExpBar(SkillType lastUsedSkill, float gainedExp) {
         if (!enabled || lastUsedSkill == null) {
             return;
         }
@@ -45,9 +46,9 @@ public class PlayerData {
 
         int exp = ExperienceAPI.getXP(player, skillName);
         int requiredExp = ExperienceAPI.getXPToNextLevel(player, skillName);
-        float percent = calculatePercent(exp, requiredExp);
+        int percent = calculatePercent(exp, requiredExp);
 
-        String newMessage = formatMessage(player, skillName, exp, requiredExp, percent);
+        String newMessage = formatMessage(player, skillName, exp, requiredExp, gainedExp, percent);
         updateBar(player, lastUsedSkill, newMessage, percent);
     }
 
@@ -79,10 +80,10 @@ public class PlayerData {
         }
     }
 
-    private String formatMessage(Player player, String lastUsedSkill, int exp, int requiredExp, float percent) {
+    private String formatMessage(Player player, String lastSkill, int exp, int requiredExp, float gained, int percent) {
         //default value
         ChatColor color = ChatColor.GOLD;
-        String colorPath = "bar.color." + lastUsedSkill.toLowerCase();
+        String colorPath = "bar.color." + lastSkill.toLowerCase();
         if (McMMOExtras.getInstance().getConfig().isSet(colorPath)) {
             //specific color for a skill type
             String configColor = McMMOExtras.getInstance().getConfig().getString(colorPath);
@@ -90,21 +91,24 @@ public class PlayerData {
             color = ChatColor.getByChar(configColor.replace("&", ""));
         }
 
-        String level = Integer.toString(ExperienceAPI.getLevel(player, lastUsedSkill));
+        int level = ExperienceAPI.getLevel(player, lastSkill);
         //custom variable replacement
         String format = McMMOExtras.getInstance().getConfig().getString("bar.format")
-                .replace("@skill", lastUsedSkill)
-                .replace("@level", level)
+                .replace("@skill", lastSkill)
+                .replace("@level", Integer.toString(level))
+                .replace("@nextLevel", Integer.toString(level + 1))
                 .replace("@exp", Integer.toString(exp))
+                .replace("@remainingExp", Integer.toString(requiredExp - exp))
+                .replace("@gainedExp", Integer.toString(NumberConversions.round(gained)))
                 .replace("@reqExp", Integer.toString(requiredExp))
-                .replace("@percent", Float.toString(percent));
+                .replace("@percent", Integer.toString(percent));
 
         return color + format;
     }
 
-    private float calculatePercent(int exp, int requiredExp) {
+    private int calculatePercent(int exp, int requiredExp) {
         //progress for the next level
-        float percent = exp * 100F / requiredExp;
+        int percent = exp * 100 / requiredExp;
         //filter invalid values from mcMMO
         if (percent < 0) {
             percent = 0;
