@@ -142,14 +142,14 @@ public class McMMOExtras extends JavaPlugin {
 
     private boolean initializeBarAPI() {
         //load priority. If this plugin is found use it in order to fix the not see bug
-        if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
-            bossAPI = new BarAPI();
+        if (ClassUtil.isPresent("org.bukkit.boss.BossBar")) {
+            bossAPI = new SpigotBarApi(getConfig());
             return true;
         } else if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
             bossAPI = new BossBarMessageAPI(getConfig());
             return true;
-        } else if (ClassUtil.isPresent("org.bukkit.boss.BossBar")) {
-            bossAPI = new SpigotBarApi(getConfig());
+        } else if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
+            bossAPI = new BarAPI();
             return true;
         }
 
