@@ -44,9 +44,7 @@ public class SpigotBarApi implements BossAPI {
         if (skill == null) {
             EnumMap<SkillType, BossBar> skillBars = bossbars.remove(player.getUniqueId());
             if (skillBars != null) {
-                for (BossBar bar : skillBars.values()) {
-                    bar.setVisible(false);
-                }
+                skillBars.values().stream().forEach(bar -> bar.setVisible(false));
             }
         } else {
             EnumMap<SkillType, BossBar> skillBars = bossbars.get(player.getUniqueId());

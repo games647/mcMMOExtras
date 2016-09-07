@@ -62,20 +62,14 @@ public class PlayerData {
                 Bukkit.getScheduler().cancelTask(taskId);
             }
 
-            Runnable disappearTimer = new Runnable() {
-
-                @Override
-                public void run() {
-                    Player player = Bukkit.getPlayerExact(playerName);
-                    if (player != null) {
-                        plugin.getBossAPI().removeBar(player, skill);
-                    }
-                }
-            };
-
             //disappear timer
             int disappearTime = plugin.getConfig().getInt("bar.disappear");
-            BukkitTask task = Bukkit.getScheduler().runTaskLater(plugin, disappearTimer, disappearTime * 20);
+            BukkitTask task = Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                Player onlinePlayer = Bukkit.getPlayerExact(playerName);
+                if (onlinePlayer != null) {
+                    plugin.getBossAPI().removeBar(onlinePlayer, skill);
+                }
+            }, disappearTime * 20);
             disappearTimers.put(skill, task.getTaskId());
         }
     }

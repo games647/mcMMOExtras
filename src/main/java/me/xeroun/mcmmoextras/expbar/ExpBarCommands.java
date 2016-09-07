@@ -30,7 +30,7 @@ public class ExpBarCommands implements CommandExecutor {
         if ((sender instanceof Player)) {
             Player player = (Player) sender;
 
-            final PlayerData data = plugin.getData(player.getName());
+            PlayerData data = plugin.getData(player.getName());
             if (data.isEnabled()) {
                 //disable it
                 player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been disabled.");

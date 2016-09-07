@@ -38,15 +38,8 @@ public class McMMOExtras extends JavaPlugin {
     private WorldGuardFlagSupport regionsWhitelist;
     private BossAPI bossAPI;
 
-    public PlayerData getData(String player) {
-        PlayerData playerData = data.get(player);
-        //get the data and check if the data exists at once
-        if (playerData == null) {
-            //lazy loading
-            playerData = new PlayerData(player);
-            data.put(player, playerData);
-        }
-
+    public PlayerData getData(String playerName) {
+        PlayerData playerData = data.computeIfAbsent(playerName, PlayerData::new);
         return playerData;
     }
 
@@ -84,9 +77,7 @@ public class McMMOExtras extends JavaPlugin {
         //Prevent memory leaks; see this http://bukkit.org/threads/how-to-make-your-plugin-better.77899/
         instance = null;
 
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            bossAPI.removeBar(onlinePlayer, null);
-        }
+        Bukkit.getOnlinePlayers().forEach((player) -> bossAPI.removeBar(player, null));
     }
 
     public BossAPI getBossAPI() {
