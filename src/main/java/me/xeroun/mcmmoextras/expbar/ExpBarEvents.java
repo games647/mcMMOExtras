@@ -17,10 +17,13 @@ public class ExpBarEvents implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onExpGain(final McMMOPlayerXpGainEvent xpGainEvent) {
+        Player player = xpGainEvent.getPlayer();
+        if (!player.hasPermission(McMMOExtras.getInstance().getName() + ".expbar")) {
+            return;
+        }
+
         //set the new value not the old one
         Bukkit.getScheduler().runTask(McMMOExtras.getInstance(), () -> {
-            Player player = xpGainEvent.getPlayer();
-
             String playerName = player.getName();
             SkillType skill = xpGainEvent.getSkill();
             String skillname = skill.getName();
