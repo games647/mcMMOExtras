@@ -18,7 +18,7 @@ public class ExpBarEvents implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onExpGain(final McMMOPlayerXpGainEvent xpGainEvent) {
         Player player = xpGainEvent.getPlayer();
-        if (!player.hasPermission(McMMOExtras.getInstance().getName() + ".expbar")) {
+        if (!player.hasPermission(McMMOExtras.getInstance().getName().toLowerCase() + ".expbar")) {
             return;
         }
 
