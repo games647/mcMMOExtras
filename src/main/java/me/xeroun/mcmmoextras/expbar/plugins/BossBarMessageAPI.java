@@ -168,7 +168,7 @@ public class BossBarMessageAPI implements BossAPI {
         }
 
         try {
-            BarStyle bukkitStyle =  BarStyle.valueOf(name.trim().toUpperCase());
+            BarStyle bukkitStyle = BarStyle.valueOf(name.trim().toUpperCase());
             Style style;
             switch (bukkitStyle) {
                 case SEGMENTED_6:

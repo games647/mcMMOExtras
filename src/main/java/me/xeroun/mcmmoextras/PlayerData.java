@@ -100,7 +100,7 @@ public class PlayerData {
         return color + format;
     }
 
-    private int calculatePercent(int exp, int requiredExp) {
+    public int calculatePercent(int exp, int requiredExp) {
         //progress for the next level
         int percent = exp * 100 / requiredExp;
         //filter invalid values from mcMMO

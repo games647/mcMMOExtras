@@ -44,7 +44,7 @@ public class ExpBarCommands implements CommandExecutor {
         } else {
             //player only feature
             sender.sendMessage(ChatColor.DARK_RED + "The expbar is a ingame graphical feature. "
-                    + "So just player could use it");
+                    + "So just players could use it");
         }
 
         return true;
