@@ -1,20 +1,15 @@
 package me.xeroun.mcmmoextras;
 
-import com.avaje.ebeaninternal.api.ClassUtil;
 import com.google.common.collect.Maps;
-
 import java.util.Map;
 import java.util.logging.Level;
-
 import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
 import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
 import me.xeroun.mcmmoextras.expbar.plugins.BarAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossBarMessageAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.SpigotBarApi;
-
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -77,7 +72,7 @@ public class McMMOExtras extends JavaPlugin {
         //Prevent memory leaks; see this http://bukkit.org/threads/how-to-make-your-plugin-better.77899/
         instance = null;
 
-        Bukkit.getOnlinePlayers().forEach((player) -> bossAPI.removeBar(player, null));
+        Bukkit.getOnlinePlayers().forEach(player -> bossAPI.removeBar(player, null));
     }
 
     public BossAPI getBossAPI() {
@@ -133,15 +128,18 @@ public class McMMOExtras extends JavaPlugin {
 
     private boolean initializeBarAPI() {
         //load priority. If this plugin is found use it in order to fix the not see bug
-        if (ClassUtil.isPresent("org.bukkit.boss.BossBar")) {
+        try {
+            Class.forName("org.bukkit.boss.BossBar");
             bossAPI = new SpigotBarApi(getConfig());
             return true;
-        } else if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
-            bossAPI = new BossBarMessageAPI(getConfig());
-            return true;
-        } else if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
-            bossAPI = new BarAPI();
-            return true;
+        } catch (ClassNotFoundException notFoundEx) {
+            if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
+                bossAPI = new BossBarMessageAPI(getConfig());
+                return true;
+            } else if (getServer().getPluginManager().isPluginEnabled("BarAPI")) {
+                bossAPI = new BarAPI();
+                return true;
+            }
         }
 
         return false;
