@@ -1,15 +1,19 @@
 package me.xeroun.mcmmoextras;
 
 import com.google.common.collect.Maps;
+
 import java.util.Map;
 import java.util.logging.Level;
+
 import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
 import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
 import me.xeroun.mcmmoextras.expbar.plugins.BarAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.BossBarMessageAPI;
 import me.xeroun.mcmmoextras.expbar.plugins.SpigotBarApi;
+
 import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
