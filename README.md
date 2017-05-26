@@ -35,8 +35,8 @@ or one of these
 
 ## Image
 
-![boss bar levels](http://i.imgur.com/3Afknuk.png)
+![boss bar levels](https://media-elerium.cursecdn.com/attachments/210/15/bar.png)
 
 See
-* http://dev.bukkit.org/bukkit-plugins/mcmmoextras/
-* http://www.curse.com/bukkit-plugins/minecraft/mcmmoextras
+* https://dev.bukkit.org/bukkit-plugins/mcmmoextras/
+* https://www.curse.com/bukkit-plugins/minecraft/mcmmoextras
