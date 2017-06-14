@@ -19,6 +19,7 @@ softdepend: [mcMMO, barAPI, Vault, WGCustomFlags, BossBarAPI]
 commands:
     expbar:
         description: 'Toggles the expbar'
+        permission: ${project.artifactId}.command.toggle
         aliases: [${project.artifactId}, mcme]
 
 # Permission managment
@@ -27,5 +28,10 @@ permissions:
         description: 'Gives all access to the plugin'
         children:
             ${project.artifactId}.expbar: true
+            ${project.artifactId}.command.toggle: true
     ${project.artifactId}.expbar:
         description: 'Allows players to see the exp bar'
+        default: true
+     ${project.artifactId}.command.toggle:
+        description: 'Allows players to use the toggle command'
+        default: true
