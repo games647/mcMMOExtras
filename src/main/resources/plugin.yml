@@ -32,6 +32,6 @@ permissions:
     ${project.artifactId}.expbar:
         description: 'Allows players to see the exp bar'
         default: true
-     ${project.artifactId}.command.toggle:
+    ${project.artifactId}.command.toggle:
         description: 'Allows players to use the toggle command'
         default: true
