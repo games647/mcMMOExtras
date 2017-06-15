@@ -75,7 +75,7 @@ public class SpigotBarApi implements BossAPI {
             }
 
             BarColor color = specificColor.get(skill);
-            if (style == null) {
+            if (color == null) {
                 color = defaultBarColor;
             }
 
