@@ -7,30 +7,17 @@
     <artifactId>mcmmoextras</artifactId>
     <packaging>jar</packaging>
 
-    <name>McMMOExtras</name>
-    <version>5.3.1</version>
+    <name>mcMMOExtras</name>
+    <version>5.3.3</version>
     <inceptionYear>2013</inceptionYear>
-    <url>http://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
+    <url>https://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
     <description>
         A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.
     </description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--Possibility to deploy directly to the plugins folder-->
-        <outputDir>${basedir}/target</outputDir>
     </properties>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/games647/McMMOExtras/issues</url>
-    </issueManagement>
-
-    <scm>
-        <url>https://github.com/games647/McMMOExtras</url>
-        <connection>scm:git:git://github.com/games647/McMMOExtras.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:games647/McMMOExtras.git</developerConnection>
-    </scm>
 
     <build>
         <defaultGoal>install</defaultGoal>
@@ -45,17 +32,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <outputDirectory>${outputDir}</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -76,12 +52,6 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
 
-        <!--WGCustomFlags-->
-        <repository>
-            <id>elmakers-repo</id>
-            <url>http://maven.elmakers.com/repository/</url>
-        </repository>
-
         <!--BossBarApi-->
         <repository>
             <id>inventivetalent-repo</id>
@@ -89,15 +59,15 @@
         </repository>
 
         <!--BarAPI-->
-        <!--        <repository>
+        <repository>
             <id>confuser-repo</id>
-            <url>http://ci.frostcast.net/plugin/repository/everything</url>
-        </repository>-->
+            <url>https://ci.frostcast.net/plugin/repository/everything</url>
+        </repository>
 
         <!--mcMMO-->
         <repository>
             <id>md_5-releases</id>
-            <url>http://repo.md-5.net/content/groups/public/</url>
+            <url>https://repo.md-5.net/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -106,14 +76,20 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12-pre2-SNAPSHOT</version>
+            <version>1.12-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.gmail.nossr50.mcMMO</groupId>
             <artifactId>mcMMO</artifactId>
-            <version>1.5.01-SNAPSHOT</version>
+            <version>1.5.00</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--API to show the dragon/wither boss bar-->
@@ -146,13 +122,8 @@
             <version>1.6.1</version>
             <optional>true</optional>
         </dependency>
+
         <!--Testing environment-->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -162,13 +133,13 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>1.6.6</version>
+            <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>1.6.6</version>
+            <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

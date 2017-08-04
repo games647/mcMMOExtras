@@ -58,7 +58,7 @@ public class BossBarMessageAPI implements BossAPI {
         } else if (skill == null) {
             EnumMap<SkillType, BossBar> skillBars = bossbars.remove(player.getUniqueId());
             if (skillBars != null) {
-                skillBars.values().stream().forEach(bar -> bar.setVisible(false));
+                skillBars.values().forEach(bar -> bar.setVisible(false));
             }
 
         } else {
@@ -85,11 +85,7 @@ public class BossBarMessageAPI implements BossAPI {
     private void setMessageNew(Player player, SkillType skill, String newMessage, float percent) {
         UUID uniqueId = player.getUniqueId();
 
-        EnumMap<SkillType, BossBar> skillBars = bossbars.get(uniqueId);
-        if (skillBars == null) {
-            skillBars = Maps.newEnumMap(SkillType.class);
-            bossbars.put(uniqueId, skillBars);
-        }
+        EnumMap<SkillType, BossBar> skillBars = bossbars.computeIfAbsent(uniqueId, k -> Maps.newEnumMap(SkillType.class));
 
         BossBar bar = skillBars.get(skill);
         if (bar == null) {

@@ -38,8 +38,7 @@ public class McMMOExtras extends JavaPlugin {
     private BossAPI bossAPI;
 
     public PlayerData getData(String playerName) {
-        PlayerData playerData = data.computeIfAbsent(playerName, PlayerData::new);
-        return playerData;
+        return data.computeIfAbsent(playerName, PlayerData::new);
     }
 
     public void clearData(Player player) {

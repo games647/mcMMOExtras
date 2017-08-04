@@ -1,6 +1,7 @@
 package me.xeroun.mcmmoextras.expbar.plugins;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
+
 import org.bukkit.entity.Player;
 
 public interface BossAPI {
