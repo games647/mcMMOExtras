@@ -1,5 +1,6 @@
 package me.xeroun.mcmmoextras;
 
+import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -82,7 +83,7 @@ public class McMMOExtras extends JavaPlugin {
         return bossAPI;
     }
 
-    public boolean isForbiddenSkillInRegion(Player player, String skill) {
+    public boolean isForbiddenSkillInRegion(Player player, SkillType skill) {
         if (regionsWhitelist != null) {
             return regionsWhitelist.isForbiddenSkillInRegion(player, skill);
         }
@@ -119,11 +120,10 @@ public class McMMOExtras extends JavaPlugin {
             PluginManager pluginManager = getServer().getPluginManager();
 
             Plugin worldGuardPlugin = pluginManager.getPlugin("WorldGuard");
-            Plugin customFlagsPlugin = pluginManager.getPlugin("WGCustomFlags");
-            if (worldGuardPlugin == null || customFlagsPlugin == null) {
-                getLogger().warning("Using world guards flags requires the plugin WGCustomFlags and WorldGuard");
+            if (worldGuardPlugin == null) {
+                getLogger().warning("Using world guards flags requires the plugin WorldGuard");
             } else {
-                regionsWhitelist = new WorldGuardFlagSupport(worldGuardPlugin, customFlagsPlugin);
+                regionsWhitelist = new WorldGuardFlagSupport(this, worldGuardPlugin);
                 regionsWhitelist.registerWorldGuardFlag();
             }
         }

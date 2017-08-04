@@ -32,7 +32,7 @@ public class ExpBarEvents implements Listener {
             //permission based max levels
             if (level <= McMMOExtras.getInstance().getMaxSkillLevel(player, skillname)
                     //world guard region flag check
-                    && !McMMOExtras.getInstance().isForbiddenSkillInRegion(player, skillname)) {
+                    && !McMMOExtras.getInstance().isForbiddenSkillInRegion(player, skill)) {
                 PlayerData playerData = McMMOExtras.getInstance().getData(playerName);
 
                 playerData.updateExpBar(skill, xpGainEvent.getRawXpGained());
