@@ -108,6 +108,12 @@
             <artifactId>BarAPI</artifactId>
             <version>3.5</version>
             <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -115,6 +121,12 @@
             <artifactId>bossbarapi</artifactId>
             <version>2.4.1</version>
             <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--API for economy variables-->
