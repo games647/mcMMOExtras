@@ -7,8 +7,8 @@
     <artifactId>mcmmoextras</artifactId>
     <packaging>jar</packaging>
 
-    <name>mcMMOExtras</name>
-    <version>5.3.3</version>
+    <name>McMMOExtras</name>
+    <version>5.4.1</version>
     <inceptionYear>2013</inceptionYear>
     <url>https://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
     <description>

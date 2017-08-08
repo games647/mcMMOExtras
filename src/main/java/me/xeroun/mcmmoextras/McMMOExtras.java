@@ -51,7 +51,7 @@ public class McMMOExtras extends JavaPlugin {
     @Override
     public void onEnable() {
         //check the dependencies
-        if (getServer().getPluginManager().isPluginEnabled("mcMMO") && initializeBarAPI()) {
+        if (initializeBarAPI()) {
             //create a config only if there is none
             saveDefaultConfig();
 
@@ -64,7 +64,7 @@ public class McMMOExtras extends JavaPlugin {
             registerWorldGuardFlag();
         } else {
             //inform the users
-            getLogger().log(Level.INFO, "{0} requires mcMMO and BarAPI, BossBarAPI or Spigot 1.9+ to work.", getName());
+            getLogger().log(Level.INFO, "{0} requires BarAPI, BossBarAPI or Spigot 1.9+ to work.", getName());
         }
     }
 

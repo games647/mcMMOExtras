@@ -13,7 +13,9 @@ dev-url: ${project.url}
 
 # depending on them - load after them to make sure they are initialized
 # Check if they are available with custom error messages
-softdepend: [mcMMO, barAPI, Vault, WGCustomFlags, BossBarAPI]
+softdepend: [barAPI, Vault, WGCustomFlags, BossBarAPI]
+
+depend: [mcMMO]
 
 # Root commands to register automatically to Bukkit
 commands:
