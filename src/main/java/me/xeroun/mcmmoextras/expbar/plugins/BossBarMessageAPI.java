@@ -13,7 +13,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
 import org.bukkit.boss.BarStyle;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBar;
 import org.inventivetalent.bossbar.BossBarAPI;
@@ -34,7 +34,7 @@ public class BossBarMessageAPI implements BossAPI {
     private Style defaultStyle;
     private Color defaultBarColor;
 
-    public BossBarMessageAPI(FileConfiguration config) {
+    public BossBarMessageAPI(ConfigurationSection config) {
         if (BossBarAPI.is1_9) {
             concurrentBars = config.getInt("concurrentBars");
 
@@ -85,7 +85,8 @@ public class BossBarMessageAPI implements BossAPI {
     private void setMessageNew(Player player, SkillType skill, String newMessage, float percent) {
         UUID uniqueId = player.getUniqueId();
 
-        EnumMap<SkillType, BossBar> skillBars = bossbars.computeIfAbsent(uniqueId, k -> Maps.newEnumMap(SkillType.class));
+        EnumMap<SkillType, BossBar> skillBars = bossbars
+                .computeIfAbsent(uniqueId, k -> Maps.newEnumMap(SkillType.class));
 
         BossBar bar = skillBars.get(skill);
         if (bar == null) {
@@ -121,7 +122,7 @@ public class BossBarMessageAPI implements BossAPI {
         lastUsedSkill = skill;
     }
 
-    private void parseSpecificConfig(FileConfiguration config) {
+    private void parseSpecificConfig(ConfigurationSection config) {
         for (SkillType skillType : SkillType.values()) {
             String skillName = skillType.getName().toLowerCase();
             Color color = parseColor(config.getString("bar.barColor." + skillName));

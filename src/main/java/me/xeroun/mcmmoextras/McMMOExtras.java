@@ -2,6 +2,7 @@ package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
 import com.google.common.collect.Maps;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -17,8 +18,6 @@ import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -73,7 +72,7 @@ public class McMMOExtras extends JavaPlugin {
         //cleanup after reloads
         data.clear();
 
-        //Prevent memory leaks; see this http://bukkit.org/threads/how-to-make-your-plugin-better.77899/
+        //Prevent memory leaks; see this https://bukkit.org/threads/how-to-make-your-plugin-better.77899/
         instance = null;
 
         Bukkit.getOnlinePlayers().forEach(player -> bossAPI.removeBar(player, null));
@@ -84,11 +83,8 @@ public class McMMOExtras extends JavaPlugin {
     }
 
     public boolean isForbiddenSkillInRegion(Player player, SkillType skill) {
-        if (regionsWhitelist != null) {
-            return regionsWhitelist.isForbiddenSkillInRegion(player, skill);
-        }
+        return regionsWhitelist != null && regionsWhitelist.isForbiddenSkillInRegion(player, skill);
 
-        return false;
     }
 
     public int getMaxSkillLevel(Player player, String skill) {
@@ -103,7 +99,7 @@ public class McMMOExtras extends JavaPlugin {
         return getConfig().getInt(configPath, Integer.MAX_VALUE);
     }
 
-    private boolean setupPermissions() {
+    private void setupPermissions() {
         if (getServer().getPluginManager().isPluginEnabled("Vault")) {
             ServicesManager serviceManager = getServer().getServicesManager();
             RegisteredServiceProvider<Permission> permissionProvider = serviceManager.getRegistration(Permission.class);
@@ -111,19 +107,14 @@ public class McMMOExtras extends JavaPlugin {
                 permission = permissionProvider.getProvider();
             }
         }
-
-        return (permission != null);
     }
 
     private void registerWorldGuardFlag() {
         if (getConfig().getBoolean("useWorldGuardFlags")) {
-            PluginManager pluginManager = getServer().getPluginManager();
-
-            Plugin worldGuardPlugin = pluginManager.getPlugin("WorldGuard");
-            if (worldGuardPlugin == null) {
+            if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
                 getLogger().warning("Using world guards flags requires the plugin WorldGuard");
             } else {
-                regionsWhitelist = new WorldGuardFlagSupport(this, worldGuardPlugin);
+                regionsWhitelist = new WorldGuardFlagSupport(WorldGuardPlugin.inst());
                 regionsWhitelist.registerWorldGuardFlag();
             }
         }

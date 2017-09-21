@@ -13,7 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class SpigotBarApi implements BossAPI {
@@ -28,7 +28,7 @@ public class SpigotBarApi implements BossAPI {
     private BarStyle defaultStyle;
     private BarColor defaultBarColor;
 
-    public SpigotBarApi(FileConfiguration config) {
+    public SpigotBarApi(ConfigurationSection config) {
         concurrentBars = config.getInt("concurrentBars");
 
         parseSpecificConfig(config);
@@ -61,7 +61,8 @@ public class SpigotBarApi implements BossAPI {
     public void setMessage(Player player, SkillType skill, String newMessage, float percent) {
         UUID uniqueId = player.getUniqueId();
 
-        EnumMap<SkillType, BossBar> skillBars = bossbars.computeIfAbsent(uniqueId, k -> Maps.newEnumMap(SkillType.class));
+        EnumMap<SkillType, BossBar> skillBars = bossbars
+                .computeIfAbsent(uniqueId, k -> Maps.newEnumMap(SkillType.class));
 
         BossBar bar = skillBars.get(skill);
         if (bar == null) {
@@ -92,7 +93,7 @@ public class SpigotBarApi implements BossAPI {
         }
     }
 
-    private void parseSpecificConfig(FileConfiguration config) {
+    private void parseSpecificConfig(ConfigurationSection config) {
         for (SkillType skillType : SkillType.values()) {
             String skillName = skillType.getName().toLowerCase();
             BarColor color = parseColor(config.getString("bar.barColor." + skillName));

@@ -7,27 +7,30 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.EnumFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class WorldGuardFlagSupport {
 
-    private final McMMOExtras plugin;
     private final WorldGuardPlugin worldGuard;
 
-    private EnumFlag<SkillType> skillListFlag = new EnumFlag<SkillType>("skill-show", SkillType.class);
+    private final EnumFlag<SkillType> skillListFlag = new EnumFlag<>("skill-show", SkillType.class);
 
-    public WorldGuardFlagSupport(McMMOExtras plugin, Plugin worldGuard) {
-        this.plugin = plugin;
-        this.worldGuard = (WorldGuardPlugin) worldGuard;
+    public WorldGuardFlagSupport(WorldGuardPlugin worldGuard) {
+        this.worldGuard = worldGuard;
     }
 
     public boolean isForbiddenSkillInRegion(Player player, SkillType skill) {
         if (worldGuard != null) {
             Location location = player.getLocation();
-            ApplicableRegionSet regions = worldGuard.getRegionContainer().get(player.getWorld()).getApplicableRegions(location);
+            RegionManager regionManager = worldGuard.getRegionContainer().get(player.getWorld());
+            if (regionManager == null) {
+                return false;
+            }
+
+            ApplicableRegionSet regions = regionManager.getApplicableRegions(location);
 
             LocalPlayer localPlayer = worldGuard.wrapPlayer(player);
             return regions.queryAllValues(localPlayer, skillListFlag).contains(skill);

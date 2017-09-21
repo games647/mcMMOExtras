@@ -4,7 +4,8 @@ A visual boss bar Bukkit plugin for mcMMO that keeps people entertained and enco
 
 ## Description
 
-mcMMOExtras adds new features to mcMMO servers which enhances game play. These features are listed down below with more details.
+mcMMOExtras adds new features to mcMMO servers which enhances game play. These features are listed down 
+below with more details.
 
 ## Features
 An Exp Bar
@@ -22,12 +23,12 @@ An Exp Bar
 
 ## Requirements
 
-* Plugin: mcMMO (http://dev.bukkit.org/bukkit-plugins/mcmmo/)
+* Plugin: mcMMO (https://dev.bukkit.org/bukkit-plugins/mcmmo/)
 
 * Spigot (including all folks) 1.9
 or one of these
-* Plugin: BossBarAPI (http://www.spigotmc.org/resources/api-bossbarapi.7504/)
-* Plugin: barAPI (http://dev.bukkit.org/bukkit-plugins/bar-api/)
+* Plugin: BossBarAPI (https://www.spigotmc.org/resources/api-bossbarapi.7504/)
+* Plugin: barAPI (https://dev.bukkit.org/bukkit-plugins/bar-api/)
 
 ## Commands
 
