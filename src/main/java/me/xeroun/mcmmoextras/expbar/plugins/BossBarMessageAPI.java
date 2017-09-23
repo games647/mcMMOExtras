@@ -1,6 +1,8 @@
 package me.xeroun.mcmmoextras.expbar.plugins;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.google.common.base.Enums;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -12,7 +14,6 @@ import java.util.UUID;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
-import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBar;
@@ -149,46 +150,27 @@ public class BossBarMessageAPI implements BossAPI {
 
     private Color parseColor(String name) {
         if (name == null || name.trim().isEmpty()) {
-            return null;
+            return Color.WHITE;
         }
 
-        try {
-            return Color.valueOf(name.trim().toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            return null;
+        Optional<Color> optionalColor = Enums.getIfPresent(Color.class, name.trim().toUpperCase());
+        if (optionalColor.isPresent()) {
+            return optionalColor.get();
         }
+
+        return Color.WHITE;
     }
 
     private Style parseStyle(String name) {
         if (name == null || name.trim().isEmpty()) {
-            return null;
+            return Style.PROGRESS;
         }
 
-        try {
-            BarStyle bukkitStyle = BarStyle.valueOf(name.trim().toUpperCase());
-            Style style;
-            switch (bukkitStyle) {
-                case SEGMENTED_6:
-                    style = Style.NOTCHED_6;
-                    break;
-                case SEGMENTED_10:
-                    style = Style.NOTCHED_10;
-                    break;
-                case SEGMENTED_12:
-                    style = Style.NOTCHED_12;
-                    break;
-                case SEGMENTED_20:
-                    style = Style.NOTCHED_20;
-                    break;
-                default:
-                case SOLID:
-                    style = Style.PROGRESS;
-                    break;
-            }
-
-            return style;
-        } catch (IllegalArgumentException argumentException) {
-            return null;
+        Optional<Style> optionalStyle = Enums.getIfPresent(Style.class, name.trim().toUpperCase());
+        if (optionalStyle.isPresent()) {
+            return optionalStyle.get();
         }
+
+        return Style.PROGRESS;
     }
 }

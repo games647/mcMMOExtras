@@ -1,6 +1,8 @@
 package me.xeroun.mcmmoextras.expbar.plugins;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.google.common.base.Enums;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -120,25 +122,27 @@ public class SpigotBarApi implements BossAPI {
 
     private BarColor parseColor(String name) {
         if (name == null || name.trim().isEmpty()) {
-            return null;
+            return BarColor.WHITE;
         }
 
-        try {
-            return BarColor.valueOf(name.trim().toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            return null;
+        Optional<BarColor> color = Enums.getIfPresent(BarColor.class, name.trim().toUpperCase());
+        if (color.isPresent()) {
+            return color.get();
         }
+
+        return BarColor.WHITE;
     }
 
     private BarStyle parseStyle(String name) {
         if (name == null || name.trim().isEmpty()) {
-            return null;
+            return BarStyle.SOLID;
         }
 
-        try {
-            return BarStyle.valueOf(name.trim().toUpperCase());
-        } catch (IllegalArgumentException argumentException) {
-            return null;
+        Optional<BarStyle> style = Enums.getIfPresent(BarStyle.class, name.trim().toUpperCase());
+        if (style.isPresent()) {
+            return style.get();
         }
+
+        return BarStyle.SOLID;
     }
 }
