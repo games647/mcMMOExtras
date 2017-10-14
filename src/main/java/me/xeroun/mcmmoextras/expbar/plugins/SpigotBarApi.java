@@ -97,19 +97,19 @@ public class SpigotBarApi implements BossAPI {
     }
 
     private BarColor parseColor(String name, BarColor def) {
-        return parseEnum(name, def);
+        return parseEnum(name, BarColor.class, def);
     }
 
     private BarStyle parseStyle(String name, BarStyle def) {
-        return parseEnum(name, def);
+        return parseEnum(name, BarStyle.class, def);
     }
 
-    private <T extends Enum<T>> T parseEnum(String name, T def) {
+    private <T extends Enum<T>> T parseEnum(String name, Class<T> enumClass, T def) {
         if (name == null || name.trim().isEmpty()) {
             return def;
         }
 
-        Optional<T> style = Enums.getIfPresent(def.getClass(), name.trim().toUpperCase());
+        Optional<T> style = Enums.getIfPresent(enumClass, name.trim().toUpperCase());
         if (style.isPresent()) {
             return style.get();
         }
