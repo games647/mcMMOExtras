@@ -16,7 +16,6 @@ public class ExpBarCommands implements CommandExecutor {
             + ChatColor.YELLOW + "] " + ChatColor.RESET;
 
     private final McMMOExtras plugin;
-
     private final String compiledPrefix;
 
     public ExpBarCommands(McMMOExtras plugin) {
@@ -28,19 +27,7 @@ public class ExpBarCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if ((sender instanceof Player)) {
-            Player player = (Player) sender;
-
-            PlayerData data = plugin.getData(player.getName());
-            if (data.isEnabled()) {
-                //disable it
-                player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been disabled.");
-                plugin.getBossAPI().removeBar(player, null);
-                data.setEnabled(false);
-            } else {
-                //enable it
-                player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been enabled.");
-                data.setEnabled(true);
-            }
+            onCommandPlayer((Player) sender);
         } else {
             //player only feature
             sender.sendMessage(ChatColor.DARK_RED + "The expbar is a in-game graphical feature. "
@@ -48,5 +35,19 @@ public class ExpBarCommands implements CommandExecutor {
         }
 
         return true;
+    }
+
+    private void onCommandPlayer(Player player) {
+        PlayerData data = plugin.getData(player);
+        if (data.isEnabled()) {
+            //disable it
+            player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been disabled.");
+            plugin.getBossAPI().removeBar(player, null);
+            data.setEnabled(false);
+        } else {
+            //enable it
+            player.sendMessage(compiledPrefix + ChatColor.AQUA + "The exp bar has been enabled.");
+            data.setEnabled(true);
+        }
     }
 }

@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 
 public interface BossAPI {
 
-    boolean hasBar(Player player);
-
     void removeBar(Player player, SkillType lastUsedSkill);
+
+    void removeAllBars(Player player);
 
     void setMessage(Player player, SkillType skill, String newMessage, float percent);
 }

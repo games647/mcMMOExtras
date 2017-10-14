@@ -9,7 +9,7 @@
 
     <name>McMMOExtras</name>
     <version>5.4.1</version>
-    <inceptionYear>2013</inceptionYear>
+
     <url>https://dev.bukkit.org/bukkit-plugins/mcmmoextras</url>
     <description>
         A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.
@@ -23,7 +23,6 @@
     </properties>
 
     <build>
-        <defaultGoal>install</defaultGoal>
         <!--Just use the project name to replace an old version of the plugin if the user does only copy-paste-->
         <finalName>${project.name}</finalName>
 
@@ -49,7 +48,7 @@
             <url>https://repo.inventivetalent.org/content/groups/public</url>
         </repository>
 
-        <!--BarAPI-->
+        <!--BarPluginApi-->
         <repository>
             <id>confuser-repo</id>
             <url>https://ci.frostcast.net/plugin/repository/everything</url>
@@ -138,26 +137,6 @@
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-core</artifactId>
             <version>6.1</version>
-        </dependency>
-
-        <!--Testing environment-->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>1.7.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
-            <version>1.7.1</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

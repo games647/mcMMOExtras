@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 public class WorldGuardFlagSupport {
 
     private final WorldGuardPlugin worldGuard;
-
     private final EnumFlag<SkillType> skillListFlag = new EnumFlag<>("skill-show", SkillType.class);
 
     public WorldGuardFlagSupport(WorldGuardPlugin worldGuard) {
