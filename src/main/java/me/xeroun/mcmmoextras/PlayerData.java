@@ -2,7 +2,6 @@ package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
 import java.util.UUID;
@@ -17,7 +16,7 @@ public class PlayerData {
     private final McMMOExtras plugin;
 
     private final UUID playerUUID;
-    private final EnumMap<SkillType, Integer> disappearTimers = Maps.newEnumMap(SkillType.class);
+    private final EnumMap<SkillType, Integer> disappearTimers = new EnumMap<>(SkillType.class);
 
     private boolean enabled = true;
 
@@ -63,7 +62,7 @@ public class PlayerData {
                 if (onlinePlayer != null) {
                     plugin.getBossAPI().removeBar(onlinePlayer, skill);
                 }
-            }, plugin.getConfig().getInt("bar.disappear") * 20);
+            }, plugin.getConfig().getInt("bar.disappear") * 20L);
 
             disappearTimers.put(skill, taskId);
         }

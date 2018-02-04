@@ -1,19 +1,17 @@
 package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.google.common.collect.Maps;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import me.xeroun.mcmmoextras.expbar.BossAPI;
 import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
 import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
-import me.xeroun.mcmmoextras.expbar.plugins.BarPluginApi;
-import me.xeroun.mcmmoextras.expbar.plugins.BossAPI;
-import me.xeroun.mcmmoextras.expbar.plugins.BossBarMessageAPI;
-import me.xeroun.mcmmoextras.expbar.plugins.SpigotBarApi;
+import me.xeroun.mcmmoextras.expbar.SpigotBarApi;
 
 import net.milkbowl.vault.permission.Permission;
 
@@ -25,10 +23,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class McMMOExtras extends JavaPlugin {
 
-    private final Map<UUID, PlayerData> data = Maps.newHashMap();
+    private final Map<UUID, PlayerData> data = new HashMap<>();
 
     //optional dependencies
-    private Permission permission = null;
+    private Permission permission;
     private WorldGuardFlagSupport regionsWhitelist;
     private BossAPI bossAPI;
 
@@ -56,7 +54,7 @@ public class McMMOExtras extends JavaPlugin {
             registerWorldGuardFlag();
         } else {
             //inform the users
-            getLogger().log(Level.INFO, "{0} requires BarPluginApi, BossBarAPI or Spigot 1.9+ to work.", getName());
+            getLogger().log(Level.INFO, "{0} requires Spigot 1.9+ to work.", getName());
         }
     }
 
@@ -116,13 +114,7 @@ public class McMMOExtras extends JavaPlugin {
             bossAPI = new SpigotBarApi(getConfig());
             return true;
         } catch (ClassNotFoundException notFoundEx) {
-            if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")) {
-                bossAPI = new BossBarMessageAPI();
-                return true;
-            } else if (getServer().getPluginManager().isPluginEnabled("BarPluginApi")) {
-                bossAPI = new BarPluginApi();
-                return true;
-            }
+            //ignore
         }
 
         return false;

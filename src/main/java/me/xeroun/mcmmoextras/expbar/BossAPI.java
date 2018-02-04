@@ -1,4 +1,4 @@
-package me.xeroun.mcmmoextras.expbar.plugins;
+package me.xeroun.mcmmoextras.expbar;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
 
