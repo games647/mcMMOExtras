@@ -6,7 +6,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import me.xeroun.mcmmoextras.expbar.BossAPI;
 import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
@@ -24,11 +23,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class McMMOExtras extends JavaPlugin {
 
     private final Map<UUID, PlayerData> data = new HashMap<>();
+    private final MessageFormatter formatter = new MessageFormatter(this);
 
     //optional dependencies
     private Permission permission;
     private WorldGuardFlagSupport regionsWhitelist;
-    private BossAPI bossAPI;
+    private BossAPI bossAPI = new SpigotBarApi(getConfig());
 
     public PlayerData getData(Player player) {
         UUID uuid = player.getUniqueId();
@@ -42,20 +42,14 @@ public class McMMOExtras extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        //check the dependencies
-        if (initializeBarAPI()) {
-            //create a config only if there is none
-            saveDefaultConfig();
+        //create a config only if there is none
+        saveDefaultConfig();
 
-            getServer().getPluginManager().registerEvents(new ExpBarEvents(this), this);
-            getCommand("expbar").setExecutor(new ExpBarCommands(this));
+        getServer().getPluginManager().registerEvents(new ExpBarEvents(this), this);
+        getCommand("expbar").setExecutor(new ExpBarCommands(this));
 
-            setupPermissions();
-            registerWorldGuardFlag();
-        } else {
-            //inform the users
-            getLogger().log(Level.INFO, "{0} requires Spigot 1.9+ to work.", getName());
-        }
+        setupPermissions();
+        registerWorldGuardFlag();
     }
 
     @Override
@@ -63,7 +57,11 @@ public class McMMOExtras extends JavaPlugin {
         //cleanup after reloads
         data.clear();
 
-        Bukkit.getOnlinePlayers().forEach(player -> bossAPI.removeAllBars(player));
+        Bukkit.getOnlinePlayers().forEach(bossAPI::removeAllBars);
+    }
+
+    public MessageFormatter getFormatter() {
+        return formatter;
     }
 
     public BossAPI getBossAPI() {
@@ -106,17 +104,17 @@ public class McMMOExtras extends JavaPlugin {
         }
     }
 
-    private boolean initializeBarAPI() {
-        //load priority. If this plugin is found use it in order to fix the not see bug
-        try {
-            //only available in 1.9
-            Class.forName("org.bukkit.boss.BossBar");
-            bossAPI = new SpigotBarApi(getConfig());
-            return true;
-        } catch (ClassNotFoundException notFoundEx) {
-            //ignore
+    public int calculatePercent(int exp, int requiredExp) {
+        //progress for the next level
+        int percent = exp * 100 / requiredExp;
+
+        //filter invalid values from mcMMO
+        if (percent < 0) {
+            percent = 0;
+        } else if (percent > 100) {
+            percent = 100;
         }
 
-        return false;
+        return percent;
     }
 }
