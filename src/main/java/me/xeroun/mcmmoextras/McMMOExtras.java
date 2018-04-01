@@ -28,7 +28,7 @@ public class McMMOExtras extends JavaPlugin {
     //optional dependencies
     private Permission permission;
     private WorldGuardFlagSupport regionsWhitelist;
-    private BossAPI bossAPI = new SpigotBarApi(getConfig());
+    private BossAPI bossAPI;
 
     public PlayerData getData(Player player) {
         UUID uuid = player.getUniqueId();
@@ -42,6 +42,8 @@ public class McMMOExtras extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        bossAPI = new SpigotBarApi(getConfig());
+
         //create a config only if there is none
         saveDefaultConfig();
 
