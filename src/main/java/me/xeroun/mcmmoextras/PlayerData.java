@@ -39,7 +39,7 @@ public class PlayerData {
 
         Player player = Bukkit.getPlayer(playerUUID);
         SkillType usedSkill = event.getSkill();
-        String skillName = usedSkill.getName();
+        String skillName = usedSkill.name();
 
         int exp = ExperienceAPI.getXP(player, skillName);
         int requiredExp = ExperienceAPI.getXPToNextLevel(player, skillName);

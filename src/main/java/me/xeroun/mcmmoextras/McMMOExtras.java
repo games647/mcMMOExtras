@@ -69,7 +69,7 @@ public class McMMOExtras extends JavaPlugin {
     }
 
     public boolean isForbiddenRegion(Player player, SkillType skill) {
-        return regionsWhitelist != null && regionsWhitelist.isForbiddenSkillInRegion(player, skill);
+        return regionsWhitelist != null && regionsWhitelist.isForbidden(player, skill);
     }
 
     public int getMaxLevel(Player player, SkillType skill) {

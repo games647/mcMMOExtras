@@ -21,7 +21,7 @@ public class WorldGuardFlagSupport {
         this.worldGuard = worldGuard;
     }
 
-    public boolean isForbiddenSkillInRegion(Player player, SkillType skill) {
+    public boolean isForbidden(Player player, SkillType skill) {
         if (worldGuard != null) {
             Location location = player.getLocation();
             RegionManager regionManager = worldGuard.getRegionContainer().get(player.getWorld());

@@ -25,7 +25,7 @@ public class MessageFormatter {
     public MessageFormatter(McMMOExtras plugin) {
         this.plugin = plugin;
 
-        replacers.put("@skill", this::skillName);
+        replacers.put("@skill", this::getLocalizedName);
         replacers.put("@exp", event -> valueOf(xp(event)));
         replacers.put("@gainedExp", event -> valueOf(event.getRawXpGained()));
         replacers.put("@remainingExp", event -> valueOf(remainingXp(event)));
@@ -48,24 +48,24 @@ public class MessageFormatter {
     }
 
     private int requiredXp(McMMOPlayerXpGainEvent event) {
-        return ExperienceAPI.getXPToNextLevel(event.getPlayer(), skillName(event));
+        return ExperienceAPI.getXPToNextLevel(event.getPlayer(), event.getSkill().name());
     }
 
     private int remainingXp(McMMOPlayerXpGainEvent event) {
-        return ExperienceAPI.getXPRemaining(event.getPlayer(), skillName(event));
+        return ExperienceAPI.getXPRemaining(event.getPlayer(), event.getSkill().name());
     }
 
     private int xp(McMMOPlayerXpGainEvent event) {
-        return ExperienceAPI.getXP(event.getPlayer(), skillName(event));
+        return ExperienceAPI.getXP(event.getPlayer(), event.getSkill().name());
     }
 
-    private String skillName(McMMOPlayerXpGainEvent event) {
+    private String getLocalizedName(McMMOPlayerXpGainEvent event) {
         return event.getSkill().getName();
     }
 
     public String format(McMMOPlayerXpGainEvent event) {
         ChatColor color = ChatColor.GOLD;
-        String colorPath = "bar.color." + skillName(event).toLowerCase();
+        String colorPath = "bar.color." + event.getSkill().name().toLowerCase();
         if (plugin.getConfig().isSet(colorPath)) {
             //specific color for a skill type
             String configColor = plugin.getConfig().getString(colorPath);

@@ -32,7 +32,7 @@ public class ExpBarEvents implements Listener {
         }
 
         SkillType skill = xpGainEvent.getSkill();
-        String skillName = skill.getName();
+        String skillName = skill.name();
         int level = ExperienceAPI.getLevel(player, skillName);
 
         //permission based max levels
