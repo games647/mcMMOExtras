@@ -87,7 +87,7 @@ public class SpigotBarApi implements BossAPI {
         BarColor defaultBarColor = parseColor(config.getString("color"), BarColor.WHITE);
 
         for (SkillType skillType : SkillType.values()) {
-            String skillName = skillType.getName().toLowerCase();
+            String skillName = skillType.name().toLowerCase();
             BarColor color = parseColor(config.getString("bar.barColor." + skillName), defaultBarColor);
             specificColor.put(skillType, color);
 
