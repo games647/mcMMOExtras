@@ -1,4 +1,4 @@
-package me.xeroun.mcmmoextras.expbar;
+package me.xeroun.mcmmoextras.bar;
 
 import me.xeroun.mcmmoextras.McMMOExtras;
 import me.xeroun.mcmmoextras.PlayerData;

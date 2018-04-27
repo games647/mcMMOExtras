@@ -1,4 +1,4 @@
-package me.xeroun.mcmmoextras.expbar;
+package me.xeroun.mcmmoextras.bar;
 
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;

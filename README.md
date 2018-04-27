@@ -8,6 +8,7 @@ mcMMOExtras adds new features to mcMMO servers which enhances game play. These f
 below with more details.
 
 ## Features
+
 An Exp Bar
 
 * A visual exp bar for mcMMO that keeps people entertained and encourages them to want to level up.
@@ -24,7 +25,7 @@ An Exp Bar
 ## Requirements
 
 * Plugin: mcMMO (https://dev.bukkit.org/bukkit-plugins/mcmmo/)
-* Spigot (including all folks) 1.9+
+* Spigot (including all forks) 1.9+
 
 ## Commands
 
@@ -37,3 +38,14 @@ An Exp Bar
 See
 * https://dev.bukkit.org/bukkit-plugins/mcmmoextras/
 * https://www.curse.com/bukkit-plugins/minecraft/mcmmoextras
+
+## Development builds
+
+Development builds of this project can be acquired at the provided CI (continuous integration) server. It contains the
+latest changes from the Source-Code in preparation for the following release. This means they could contain new
+features, bug fixes and other changes since the last release.
+
+Nevertheless builds are only tested using a small set of automated and a few manual tests. Therefore they **could**
+contain new bugs and are likely to be less stable than released versions.
+
+https://ci.codemc.org/job/Games647/job/mcMMOExtras/changes

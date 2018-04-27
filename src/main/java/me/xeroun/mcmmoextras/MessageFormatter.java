@@ -77,7 +77,8 @@ public class MessageFormatter {
         //StringBuilder is only compatible with Java 9+
         StringBuffer buffer = new StringBuffer(color.toString());
 
-        Matcher matcher = variablePattern.matcher(plugin.getConfig().getString("bar.format"));
+        String format = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("bar.format"));
+        Matcher matcher = variablePattern.matcher(format);
         while (matcher.find()) {
             matcher.appendReplacement(buffer, replacers.get(matcher.group()).apply(event));
         }

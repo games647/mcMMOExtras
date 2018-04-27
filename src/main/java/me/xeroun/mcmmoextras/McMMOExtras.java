@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import me.xeroun.mcmmoextras.expbar.BossAPI;
-import me.xeroun.mcmmoextras.expbar.ExpBarCommands;
-import me.xeroun.mcmmoextras.expbar.ExpBarEvents;
-import me.xeroun.mcmmoextras.expbar.SpigotBarApi;
+import me.xeroun.mcmmoextras.bar.BossAPI;
+import me.xeroun.mcmmoextras.bar.ExpBarCommands;
+import me.xeroun.mcmmoextras.bar.ExpBarEvents;
+import me.xeroun.mcmmoextras.bar.SpigotBarApi;
 
 import net.milkbowl.vault.permission.Permission;
 
