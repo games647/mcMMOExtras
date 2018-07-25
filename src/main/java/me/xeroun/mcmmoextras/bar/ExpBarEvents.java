@@ -25,18 +25,18 @@ public class ExpBarEvents implements Listener {
 
     //set the new value not the old one
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onExpGain(final McMMOPlayerXpGainEvent xpGainEvent) {
+    public void onExpGain(McMMOPlayerXpGainEvent xpGainEvent) {
         Player player = xpGainEvent.getPlayer();
-        if (!player.hasPermission(permission)) {
+        SkillType skill = xpGainEvent.getSkill();
+        if (!player.hasPermission(permission) || plugin.isForbiddenRegion(player, skill)) {
             return;
         }
 
-        SkillType skill = xpGainEvent.getSkill();
         String skillName = skill.name();
         int level = ExperienceAPI.getLevel(player, skillName);
 
         //permission based max levels
-        if (level <= plugin.getMaxLevel(player, skill) && !plugin.isForbiddenRegion(player, skill)) {
+        if (level <= plugin.getMaxLevel(player, skill) {
             PlayerData playerData = plugin.getData(player);
             playerData.updateExpBar(xpGainEvent);
         }

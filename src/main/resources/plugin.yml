@@ -15,7 +15,11 @@ dev-url: ${project.url}
 # Check if they are available with custom error messages
 softdepend: [barAPI, Vault, WGCustomFlags, BossBarAPI]
 
+# This plugin only works with mcMMO
 depend: [mcMMO]
+
+# This plugin don't have to be transformed for compatibility with Minecraft >= 1.13
+api-version: 1.13
 
 # Root commands to register automatically to Bukkit
 commands:
