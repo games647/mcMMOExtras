@@ -36,7 +36,7 @@ public class ExpBarEvents implements Listener {
         int level = ExperienceAPI.getLevel(player, skillName);
 
         //permission based max levels
-        if (level <= plugin.getMaxLevel(player, skill) {
+        if (level <= plugin.getMaxLevel(player, skill)) {
             PlayerData playerData = plugin.getData(player);
             playerData.updateExpBar(xpGainEvent);
         }

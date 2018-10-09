@@ -10,5 +10,5 @@ public interface BossAPI {
 
     void removeAllBars(Player player);
 
-    void setMessage(Player player, SkillType skill, String newMessage, float percent);
+    void setMessage(Player player, SkillType skill, String newMessage, double percent);
 }

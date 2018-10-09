@@ -53,7 +53,7 @@ public class SpigotBarApi implements BossAPI {
     }
 
     @Override
-    public void setMessage(Player player, SkillType skill, String newMessage, float percent) {
+    public void setMessage(Player player, SkillType skill, String newMessage, double percent) {
         UUID uniqueId = player.getUniqueId();
 
         EnumMap<SkillType, BossBar> skillBars = bossBars
@@ -74,7 +74,7 @@ public class SpigotBarApi implements BossAPI {
         bar.setTitle(newMessage);
         bar.setVisible(true);
 
-        bar.setProgress(percent / 100);
+        bar.setProgress(percent);
         oldBars.remove(bar);
         oldBars.addLast(bar);
         if (oldBars.size() > concurrentBars) {

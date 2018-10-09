@@ -43,13 +43,13 @@ public class PlayerData {
 
         int exp = ExperienceAPI.getXP(player, skillName);
         int requiredExp = ExperienceAPI.getXPToNextLevel(player, skillName);
-        int percent = plugin.calculatePercent(exp, requiredExp);
+        double percent = plugin.calculatePercent(exp, requiredExp);
 
         String newMessage = plugin.getFormatter().format(event);
         updateBar(player, usedSkill, newMessage, percent);
     }
 
-    private void updateBar(Player player, final SkillType skill, String message, float percent) {
+    private void updateBar(Player player, final SkillType skill, String message, double percent) {
         plugin.getBossAPI().setMessage(player, skill, message, percent);
 
         Bukkit.getScheduler().cancelTask(disappearTimers.getOrDefault(skill, -1));

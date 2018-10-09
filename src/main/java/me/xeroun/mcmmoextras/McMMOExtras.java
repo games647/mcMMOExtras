@@ -106,17 +106,13 @@ public class McMMOExtras extends JavaPlugin {
         }
     }
 
-    public int calculatePercent(int exp, int requiredExp) {
+    public double calculatePercent(int exp, int requiredExp) {
         //progress for the next level
-        int percent = exp * 100 / requiredExp;
+        double percent = exp / (double) requiredExp;
 
         //filter invalid values from mcMMO
-        if (percent < 0) {
-            percent = 0;
-        } else if (percent > 100) {
-            percent = 100;
-        }
-
+        percent = Math.max(0.0D, percent);
+        percent = Math.min(percent, 1.0D);
         return percent;
     }
 }

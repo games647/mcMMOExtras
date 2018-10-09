@@ -3,6 +3,7 @@ package me.xeroun.mcmmoextras;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,8 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
-
-import static java.lang.String.valueOf;
+import org.bukkit.util.NumberConversions;
 
 public class MessageFormatter {
 
@@ -26,13 +26,14 @@ public class MessageFormatter {
         this.plugin = plugin;
 
         replacers.put("@skill", this::getLocalizedName);
-        replacers.put("@exp", event -> valueOf(xp(event)));
-        replacers.put("@gainedExp", event -> valueOf(event.getRawXpGained()));
-        replacers.put("@remainingExp", event -> valueOf(remainingXp(event)));
-        replacers.put("@level",event -> valueOf(event.getSkillLevel()));
-        replacers.put("@nextLevel", event -> valueOf(event.getSkillLevel() + 1));
-        replacers.put("@reqExp", event -> valueOf(requiredXp(event)));
-        replacers.put("@percent", event -> valueOf(plugin.calculatePercent(xp(event), requiredXp(event))));
+        replacers.put("@exp", event -> formatNumber(xp(event)));
+        replacers.put("@gainedExp", event -> formatNumber(NumberConversions.round(event.getRawXpGained())));
+        replacers.put("@remainingExp", event -> formatNumber(remainingXp(event)));
+        replacers.put("@level",event -> formatNumber(event.getSkillLevel()));
+        replacers.put("@nextLevel", event -> formatNumber(event.getSkillLevel() + 1));
+        replacers.put("@reqExp", event -> formatNumber(requiredXp(event)));
+        replacers.put("@percent", event ->
+                NumberFormat.getPercentInstance().format(plugin.calculatePercent(xp(event), requiredXp(event))));
 
         StringBuilder builder = new StringBuilder();
         Iterator<String> iterator = replacers.keySet().iterator();
@@ -57,6 +58,15 @@ public class MessageFormatter {
 
     private int xp(McMMOPlayerXpGainEvent event) {
         return ExperienceAPI.getXP(event.getPlayer(), event.getSkill().name());
+    }
+
+    /**
+     * Format the number including with 10^3 delimiters.
+     * @param number the number that should be formatted
+     * @return formatted number
+     */
+    private String formatNumber(int number) {
+        return NumberFormat.getNumberInstance().format(number);
     }
 
     private String getLocalizedName(McMMOPlayerXpGainEvent event) {
