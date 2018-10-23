@@ -9,9 +9,12 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.EnumFlag;
+import com.sk89q.worldguard.protection.flags.SetFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+
+import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,7 +22,8 @@ import org.bukkit.entity.Player;
 public class WorldGuardFlagSupport {
 
     private final WorldGuard worldGuard = WorldGuard.getInstance();
-    private final EnumFlag<SkillType> skillListFlag = new EnumFlag<>("skill-show", SkillType.class);
+    private final SetFlag<SkillType> skillListFlag = new SetFlag<>("skill-ignore",
+            new EnumFlag<>("skill", SkillType.class));
 
     public boolean isForbidden(Player player, SkillType skill) {
         if (worldGuard != null) {
@@ -33,7 +37,11 @@ public class WorldGuardFlagSupport {
 
             ApplicableRegionSet regions = regionManager.getApplicableRegions(toVector(location));
             LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
-            return regions.queryAllValues(localPlayer, skillListFlag).contains(skill);
+            Set<SkillType> result = regions.queryValue(localPlayer, skillListFlag);
+
+            if (result != null) {
+                return result.contains(skill);
+            }
         }
 
         return false;

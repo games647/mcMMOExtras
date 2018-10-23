@@ -72,7 +72,7 @@ bar:
 # Should the bar always show up
 alwaysShow: false
 
-# Checks the region the player is in a region and shows only if the skill is listed in a flag "show-skill" there
+# Checks the region the player is in a region and shows only if the skill is not listed in a flag "skill-ignore" there
 useWorldGuardFlags: false
 
 # permission based max levels
