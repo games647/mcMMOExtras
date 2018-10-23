@@ -1,7 +1,6 @@
 package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -100,7 +99,7 @@ public class McMMOExtras extends JavaPlugin {
             if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
                 getLogger().warning("Using world guards flags requires the plugin WorldGuard");
             } else {
-                regionsWhitelist = new WorldGuardFlagSupport(WorldGuardPlugin.inst());
+                regionsWhitelist = new WorldGuardFlagSupport();
                 regionsWhitelist.registerWorldGuardFlag();
             }
         }
