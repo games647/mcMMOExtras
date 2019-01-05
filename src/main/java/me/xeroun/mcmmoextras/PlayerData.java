@@ -1,7 +1,7 @@
 package me.xeroun.mcmmoextras;
 
 import com.gmail.nossr50.api.ExperienceAPI;
-import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.gmail.nossr50.datatypes.skills.PrimarySkill;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
 import java.util.EnumMap;
@@ -15,7 +15,7 @@ public class PlayerData {
     private final McMMOExtras plugin;
 
     private final UUID playerUUID;
-    private final EnumMap<SkillType, Integer> disappearTimers = new EnumMap<>(SkillType.class);
+    private final EnumMap<PrimarySkill, Integer> disappearTimers = new EnumMap<>(PrimarySkill.class);
 
     private boolean enabled = true;
 
@@ -38,7 +38,7 @@ public class PlayerData {
         }
 
         Player player = Bukkit.getPlayer(playerUUID);
-        SkillType usedSkill = event.getSkill();
+        PrimarySkill usedSkill = event.getSkill();
         String skillName = usedSkill.name();
 
         int exp = ExperienceAPI.getXP(player, skillName);
@@ -49,7 +49,7 @@ public class PlayerData {
         updateBar(player, usedSkill, newMessage, percent);
     }
 
-    private void updateBar(Player player, final SkillType skill, String message, double percent) {
+    private void updateBar(Player player, final PrimarySkill skill, String message, double percent) {
         plugin.getBossAPI().setMessage(player, skill, message, percent);
 
         Bukkit.getScheduler().cancelTask(disappearTimers.getOrDefault(skill, -1));

@@ -1,8 +1,8 @@
 package me.xeroun.mcmmoextras;
 
-import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.sk89q.worldedit.Vector;
+import com.gmail.nossr50.datatypes.skills.PrimarySkill;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
@@ -22,10 +22,10 @@ import org.bukkit.entity.Player;
 public class WorldGuardFlagSupport {
 
     private final WorldGuard worldGuard = WorldGuard.getInstance();
-    private final SetFlag<SkillType> skillListFlag = new SetFlag<>("skill-ignore",
-            new EnumFlag<>("skill", SkillType.class));
+    private final SetFlag<PrimarySkill> skillListFlag = new SetFlag<>("skill-ignore",
+            new EnumFlag<>("skill", PrimarySkill.class));
 
-    public boolean isForbidden(Player player, SkillType skill) {
+    public boolean isForbidden(Player player, PrimarySkill skill) {
         if (worldGuard != null) {
             Location location = player.getLocation();
 
@@ -37,7 +37,7 @@ public class WorldGuardFlagSupport {
 
             ApplicableRegionSet regions = regionManager.getApplicableRegions(toVector(location));
             LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
-            Set<SkillType> result = regions.queryValue(localPlayer, skillListFlag);
+            Set<PrimarySkill> result = regions.queryValue(localPlayer, skillListFlag);
 
             if (result != null) {
                 return result.contains(skill);
@@ -47,8 +47,8 @@ public class WorldGuardFlagSupport {
         return false;
     }
 
-    private Vector toVector(Location loc) {
-        return new Vector(loc.getX(), loc.getY(), loc.getZ());
+    private BlockVector3 toVector(Location loc) {
+        return BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
     }
 
     public void registerWorldGuardFlag() {
