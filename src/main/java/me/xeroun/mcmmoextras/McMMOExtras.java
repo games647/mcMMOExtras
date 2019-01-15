@@ -1,6 +1,6 @@
 package me.xeroun.mcmmoextras;
 
-import com.gmail.nossr50.datatypes.skills.PrimarySkill;
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,11 +69,11 @@ public class McMMOExtras extends JavaPlugin {
         return bossAPI;
     }
 
-    public boolean isForbiddenRegion(Player player, PrimarySkill skill) {
+    public boolean isForbiddenRegion(Player player, PrimarySkillType skill) {
         return regionsWhitelist != null && regionsWhitelist.isForbidden(player, skill);
     }
 
-    public int getMaxLevel(Player player, PrimarySkill skill) {
+    public int getMaxLevel(Player player, PrimarySkillType skill) {
         if (permission == null || !permission.hasGroupSupport()) {
             //vault hasn't found
             return Integer.MAX_VALUE;

@@ -1,7 +1,7 @@
 package me.xeroun.mcmmoextras.bar;
 
 import com.gmail.nossr50.api.ExperienceAPI;
-import com.gmail.nossr50.datatypes.skills.PrimarySkill;
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 
 import me.xeroun.mcmmoextras.McMMOExtras;
@@ -27,7 +27,7 @@ public class ExpBarEvents implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onExpGain(McMMOPlayerXpGainEvent xpGainEvent) {
         Player player = xpGainEvent.getPlayer();
-        PrimarySkill skill = xpGainEvent.getSkill();
+        PrimarySkillType skill = xpGainEvent.getSkill();
         if (!player.hasPermission(permission) || plugin.isForbiddenRegion(player, skill)) {
             return;
         }

@@ -1,6 +1,6 @@
 package me.xeroun.mcmmoextras.bar;
 
-import com.gmail.nossr50.datatypes.skills.PrimarySkill;
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import com.google.common.base.Enums;
 import com.google.common.base.Optional;
 
@@ -20,12 +20,12 @@ import org.bukkit.entity.Player;
 
 public class SpigotBarApi implements BossAPI {
 
-    private final Map<UUID, EnumMap<PrimarySkill, BossBar>> bossBars = new HashMap<>();
+    private final Map<UUID, EnumMap<PrimarySkillType, BossBar>> bossBars = new HashMap<>();
     private final Deque<BossBar> oldBars = new LinkedList<>();
     private final int concurrentBars;
 
-    private final Map<PrimarySkill, BarStyle> specificStyle = new EnumMap<>(PrimarySkill.class);
-    private final Map<PrimarySkill, BarColor> specificColor = new EnumMap<>(PrimarySkill.class);
+    private final Map<PrimarySkillType, BarStyle> specificStyle = new EnumMap<>(PrimarySkillType.class);
+    private final Map<PrimarySkillType, BarColor> specificColor = new EnumMap<>(PrimarySkillType.class);
 
     public SpigotBarApi(ConfigurationSection config) {
         concurrentBars = config.getInt("concurrentBars");
@@ -34,8 +34,8 @@ public class SpigotBarApi implements BossAPI {
     }
 
     @Override
-    public void removeBar(Player player, PrimarySkill skill) {
-        Map<PrimarySkill, BossBar> skillBars = bossBars.get(player.getUniqueId());
+    public void removeBar(Player player, PrimarySkillType skill) {
+        Map<PrimarySkillType, BossBar> skillBars = bossBars.get(player.getUniqueId());
         if (skillBars != null) {
             BossBar bar = skillBars.get(skill);
             if (bar != null) {
@@ -46,18 +46,18 @@ public class SpigotBarApi implements BossAPI {
 
     @Override
     public void removeAllBars(Player player) {
-        Map<PrimarySkill, BossBar> skillBars = bossBars.remove(player.getUniqueId());
+        Map<PrimarySkillType, BossBar> skillBars = bossBars.remove(player.getUniqueId());
         if (skillBars != null) {
             skillBars.values().forEach(bar -> bar.setVisible(false));
         }
     }
 
     @Override
-    public void setMessage(Player player, PrimarySkill skill, String newMessage, double percent) {
+    public void setMessage(Player player, PrimarySkillType skill, String newMessage, double percent) {
         UUID uniqueId = player.getUniqueId();
 
-        EnumMap<PrimarySkill, BossBar> skillBars = bossBars
-                .computeIfAbsent(uniqueId, k -> new EnumMap<>(PrimarySkill.class));
+        EnumMap<PrimarySkillType, BossBar> skillBars = bossBars
+                .computeIfAbsent(uniqueId, k -> new EnumMap<>(PrimarySkillType.class));
 
         BossBar bar = skillBars.computeIfAbsent(skill, skillType -> {
             BarStyle style = specificStyle.get(skillType);
@@ -86,7 +86,7 @@ public class SpigotBarApi implements BossAPI {
         BarStyle defaultStyle = parseStyle(config.getString("segments"), BarStyle.SOLID);
         BarColor defaultBarColor = parseColor(config.getString("color"), BarColor.WHITE);
 
-        for (PrimarySkill skillType : PrimarySkill.values()) {
+        for (PrimarySkillType skillType : PrimarySkillType.values()) {
             String skillName = skillType.name().toLowerCase();
             BarColor color = parseColor(config.getString("bar.barColor." + skillName), defaultBarColor);
             specificColor.put(skillType, color);

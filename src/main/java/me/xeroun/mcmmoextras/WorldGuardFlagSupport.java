@@ -1,6 +1,6 @@
 package me.xeroun.mcmmoextras;
 
-import com.gmail.nossr50.datatypes.skills.PrimarySkill;
+import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.world.World;
@@ -22,10 +22,10 @@ import org.bukkit.entity.Player;
 public class WorldGuardFlagSupport {
 
     private final WorldGuard worldGuard = WorldGuard.getInstance();
-    private final SetFlag<PrimarySkill> skillListFlag = new SetFlag<>("skill-ignore",
-            new EnumFlag<>("skill", PrimarySkill.class));
+    private final SetFlag<PrimarySkillType> skillListFlag = new SetFlag<>("skill-ignore",
+            new EnumFlag<>("skill", PrimarySkillType.class));
 
-    public boolean isForbidden(Player player, PrimarySkill skill) {
+    public boolean isForbidden(Player player, PrimarySkillType skill) {
         if (worldGuard != null) {
             Location location = player.getLocation();
 
@@ -37,8 +37,8 @@ public class WorldGuardFlagSupport {
 
             ApplicableRegionSet regions = regionManager.getApplicableRegions(toVector(location));
             LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
-            Set<PrimarySkill> result = regions.queryValue(localPlayer, skillListFlag);
 
+            Set<PrimarySkillType> result = regions.queryValue(localPlayer, skillListFlag);
             if (result != null) {
                 return result.contains(skill);
             }
